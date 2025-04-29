@@ -1,0 +1,54 @@
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace SaphetyToDDL.Lib.Models.Saphety
+{
+    [XmlRoot("invoice")]
+    public class Invoice
+    {
+        [XmlAttribute("docInstanceId")]
+        public string DocInstanceId { get; set; }
+
+        [XmlAttribute("documentCorrelationId")]
+        public string DocumentCorrelationId { get; set; }
+
+        [XmlAttribute("docTypeId")]
+        public string DocTypeId { get; set; }
+
+        [XmlElement("senderSoftwareCertificationNumber")]
+        public string SenderSoftwareCertificationNumber { get; set; }
+
+        [XmlElement("senderSoftwareDocumentSignatureHash")]
+        public string SenderSoftwareDocumentSignatureHash { get; set; }
+
+        [XmlElement("currencyISOCode")]
+        public string CurrencyISOCode { get; set; }
+
+        [XmlElement("documentNumber")]
+        public string DocumentNumber { get; set; }
+
+        [XmlElement("documentDates")]
+        public DocumentDates DocumentDates { get; set; }
+
+        [XmlElement("binaryDocumentFormat")]
+        public BinaryDocumentFormat BinaryDocumentFormat { get; set; }
+
+        [XmlElement("partyInformation")]
+        public PartyInformation PartyInformation { get; set; }
+
+        [XmlElement("documentReferences")]
+        public DocumentReferences DocumentReferences { get; set; }
+
+        [XmlElement("paymentTerms")]
+        public PaymentTerms PaymentTerms { get; set; }
+
+        [XmlElement("lineItem")]
+        public List<LineItem> LineItems { get; set; }
+
+        [XmlElement("documentTotals")]
+        public DocumentTotals DocumentTotals { get; set; }
+
+        [XmlElement("metaInfo")]
+        public MetaInfo MetaInfo { get; set; }
+    }
+}

@@ -1,0 +1,14 @@
+/.vs
+/CIUSPTToDDL/bin
+/CIUSPTToDDL/obj
+/CIUSPTToDDL.Console/bin
+/CIUSPTToDDL.Console/obj
+/CIUSPTToDDL.Lib/obj
+/CIUSPTToDDL.Lib/bin
+/CIUSPTToDDL.Lib/CIUSPTToDDL.Lib.nuspec
+/CIUSPTToDDL.Lib/nugetPackagePush.cmd
+/SaphetyToDDL.Lib/bin
+/SaphetyToDDL.Lib/obj
+/SaphetyToDDL.Console/bin
+/SaphetyToDDL.Console/obj
+/SaphetyToDDL.Lib/nugetPackagePush.cmd
