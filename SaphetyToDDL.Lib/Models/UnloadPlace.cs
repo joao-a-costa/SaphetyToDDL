@@ -8,16 +8,16 @@ namespace SaphetyToDDL.Lib.Models
     public class UnloadPlace
     {
         [JsonProperty("LoadUnloadPlaceID")]
-        public int? LoadUnloadPlaceID;
+        public double? LoadUnloadPlaceID;
 
         [JsonProperty("Description")]
         public string Description;
 
         [JsonProperty("AddressType")]
-        public int? AddressType;
+        public double? AddressType;
 
         [JsonProperty("AddressTypeID")]
-        public int? AddressTypeID;
+        public double? AddressTypeID;
 
         [JsonProperty("ExtendedProperties")]
         public System.Collections.Generic.List<object> ExtendedProperties;

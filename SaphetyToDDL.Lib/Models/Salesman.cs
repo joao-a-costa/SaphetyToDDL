@@ -8,7 +8,7 @@ namespace SaphetyToDDL.Lib.Models
     public class Salesman
     {
         [JsonProperty("SalesmanID")]
-        public int? SalesmanID;
+        public double? SalesmanID;
 
         [JsonProperty("SalesmanKey")]
         public string SalesmanKey;
@@ -32,7 +32,7 @@ namespace SaphetyToDDL.Lib.Models
         public string ProvinceID;
 
         [JsonProperty("LocalityID")]
-        public int? LocalityID;
+        public double? LocalityID;
 
         [JsonProperty("Telephone1")]
         public string Telephone1;
@@ -68,16 +68,16 @@ namespace SaphetyToDDL.Lib.Models
         public string FederalTaxID;
 
         [JsonProperty("SalesmanLevel")]
-        public int? SalesmanLevel;
+        public double? SalesmanLevel;
 
         [JsonProperty("ComissionTaxOnSale")]
-        public int? ComissionTaxOnSale;
+        public double? ComissionTaxOnSale;
 
         [JsonProperty("ComissionIncidenceType")]
-        public int? ComissionIncidenceType;
+        public double? ComissionIncidenceType;
 
         [JsonProperty("ComissionTaxOnPay")]
-        public int? ComissionTaxOnPay;
+        public double? ComissionTaxOnPay;
 
         [JsonProperty("ComissionAccountTypeID")]
         public string ComissionAccountTypeID;
@@ -86,13 +86,13 @@ namespace SaphetyToDDL.Lib.Models
         public bool? AplyRetentionTax;
 
         [JsonProperty("RetentionTax")]
-        public int? RetentionTax;
+        public double? RetentionTax;
 
         [JsonProperty("SalesGroupID")]
-        public int? SalesGroupID;
+        public double? SalesGroupID;
 
         [JsonProperty("MaximumDiscount")]
-        public int? MaximumDiscount;
+        public double? MaximumDiscount;
 
         [JsonProperty("Picture")]
         public string Picture;
@@ -110,7 +110,7 @@ namespace SaphetyToDDL.Lib.Models
         public bool? Admin;
 
         [JsonProperty("LastSalesmanID")]
-        public int? LastSalesmanID;
+        public double? LastSalesmanID;
 
         [JsonProperty("Permissions")]
         public System.Collections.Generic.List<object> Permissions;
@@ -128,7 +128,7 @@ namespace SaphetyToDDL.Lib.Models
         public string DepartmentID;
 
         [JsonProperty("LedgerAccountBalance")]
-        public int? LedgerAccountBalance;
+        public double? LedgerAccountBalance;
 
         [JsonProperty("CurrencyID")]
         public string CurrencyID;
@@ -155,7 +155,7 @@ namespace SaphetyToDDL.Lib.Models
         public string StoreList;
 
         [JsonProperty("PasswordStrength")]
-        public int? PasswordStrength;
+        public double? PasswordStrength;
 
         [JsonProperty("GDPRConsent")]
         public bool? GDPRConsent;
@@ -188,7 +188,7 @@ namespace SaphetyToDDL.Lib.Models
         public string GDPRStateUserGUID;
 
         [JsonProperty("GDPRState")]
-        public int? GDPRState;
+        public double? GDPRState;
 
         [JsonProperty("ExtendedProperties")]
         public System.Collections.Generic.List<object> ExtendedProperties;
@@ -206,13 +206,13 @@ namespace SaphetyToDDL.Lib.Models
         public string OrganizationName;
 
         [JsonProperty("FiscalStatusID")]
-        public int? FiscalStatusID;
+        public double? FiscalStatusID;
 
         [JsonProperty("PartyType")]
-        public int? PartyType;
+        public double? PartyType;
 
         [JsonProperty("PartyID")]
-        public int? PartyID;
+        public double? PartyID;
 
         [JsonProperty("Fax")]
         public object Fax;
@@ -221,7 +221,7 @@ namespace SaphetyToDDL.Lib.Models
         public string Telephone;
 
         [JsonProperty("AccountBalance")]
-        public int? AccountBalance;
+        public double? AccountBalance;
 
         [JsonProperty("AccountCurrencyID")]
         public string AccountCurrencyID;
@@ -230,7 +230,7 @@ namespace SaphetyToDDL.Lib.Models
         public bool? Locked;
 
         [JsonProperty("TaxablePersonType")]
-        public int? TaxablePersonType;
+        public double? TaxablePersonType;
     }
 
 

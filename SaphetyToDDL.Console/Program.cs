@@ -26,10 +26,10 @@ Console.WriteLine("=== Parsing DDL Sample File ===");
 var itemTransactionDdl = JsonConvert.DeserializeObject<ItemTransaction>(serializeJsonSaphety);
 
 // Map DDL ItemTransaction into an Invoice object
-var invoiceSaphety = saphetyToDDL.MapFromDdl(itemTransactionDdl);
+var invoiceSaphety = SaphetyToDDL.Lib.SaphetyToDDL.MapFromDdl(itemTransactionDdl);
 
 // Serialize Invoice object into XML format
-var serializeXmlDdl = saphetyToDDL.SerializeInvoiceToXml(invoiceSaphety);
+var serializeXmlDdl = SaphetyToDDL.Lib.SaphetyToDDL.SerializeInvoiceToXml(invoiceSaphety);
 
 Console.WriteLine("--- DDL Mapped and Serialized to XML ---");
 Console.WriteLine(serializeXmlDdl);

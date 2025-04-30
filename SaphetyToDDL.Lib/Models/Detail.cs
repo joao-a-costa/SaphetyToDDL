@@ -15,10 +15,10 @@ namespace SaphetyToDDL.Lib.Models
         public string TransDocument;
 
         [JsonProperty("TransDocNumber")]
-        public int? TransDocNumber;
+        public double? TransDocNumber;
 
         [JsonProperty("Key")]
-        public int? Key;
+        public double? Key;
 
         [JsonProperty("CreateDate")]
         public System.DateTime? CreateDate;
@@ -36,19 +36,19 @@ namespace SaphetyToDDL.Lib.Models
         public string OriginTransDocument;
 
         [JsonProperty("OriginTransDocNumber")]
-        public int? OriginTransDocNumber;
+        public double? OriginTransDocNumber;
 
         [JsonProperty("OriginLineItemID")]
-        public int? OriginLineItemID;
+        public double? OriginLineItemID;
 
         [JsonProperty("OriginLineItemSubID")]
-        public int? OriginLineItemSubID;
+        public double? OriginLineItemSubID;
 
         [JsonProperty("OriginQuantity")]
-        public int? OriginQuantity;
+        public double? OriginQuantity;
 
         [JsonProperty("OriginUnits")]
-        public int? OriginUnits;
+        public double? OriginUnits;
 
         [JsonProperty("DestinationTransSerial")]
         public string DestinationTransSerial;
@@ -57,28 +57,28 @@ namespace SaphetyToDDL.Lib.Models
         public string DestinationTransDocument;
 
         [JsonProperty("DestinationTransDocNumber")]
-        public int? DestinationTransDocNumber;
+        public double? DestinationTransDocNumber;
 
         [JsonProperty("DestinationLineItemID")]
-        public int? DestinationLineItemID;
+        public double? DestinationLineItemID;
 
         [JsonProperty("DestinationLineItemSubID")]
-        public int? DestinationLineItemSubID;
+        public double? DestinationLineItemSubID;
 
         [JsonProperty("DestinationQuantity")]
-        public int? DestinationQuantity;
+        public double? DestinationQuantity;
 
         [JsonProperty("DestinationUnits")]
-        public int? DestinationUnits;
+        public double? DestinationUnits;
 
         [JsonProperty("TransactionConverted")]
         public bool? TransactionConverted;
 
         [JsonProperty("LineItemID")]
-        public int? LineItemID;
+        public double? LineItemID;
 
         [JsonProperty("LineItemSubID")]
-        public int? LineItemSubID;
+        public double? LineItemSubID;
 
         [JsonProperty("ItemID")]
         public string ItemID;
@@ -89,20 +89,20 @@ namespace SaphetyToDDL.Lib.Models
         [JsonProperty("BarCode")]
         public string BarCode;
 
-        [JsonProperty("Lot")]
-        public Lot Lot;
+        //[JsonProperty("Lot")]
+        //public Lot Lot;
 
         [JsonProperty("ItemType")]
-        public int? ItemType;
+        public double? ItemType;
 
         [JsonProperty("SupplierItemID")]
         public string SupplierItemID;
 
-        [JsonProperty("Color")]
-        public Color Color;
+        //[JsonProperty("Color")]
+        //public Color Color;
 
-        [JsonProperty("Size")]
-        public Size Size;
+        //[JsonProperty("Size")]
+        //public Size Size;
 
         [JsonProperty("GridSize")]
         public System.Collections.Generic.List<object> GridSize;
@@ -114,7 +114,7 @@ namespace SaphetyToDDL.Lib.Models
         public string ShortDescription;
 
         [JsonProperty("TaxableGroupID")]
-        public int? TaxableGroupID;
+        public double? TaxableGroupID;
 
         //[JsonProperty("Taxes")]
         //public List<Taxis>? Taxes;
@@ -132,46 +132,46 @@ namespace SaphetyToDDL.Lib.Models
         public string WeightUnitOfMeasure;
 
         [JsonProperty("WeightMeasure")]
-        public int? WeightMeasure;
+        public double? WeightMeasure;
 
         [JsonProperty("Graduation")]
-        public int? Graduation;
+        public double? Graduation;
 
         [JsonProperty("ItemTax")]
-        public int? ItemTax;
+        public double? ItemTax;
 
         [JsonProperty("ItemTax2")]
-        public int? ItemTax2;
+        public double? ItemTax2;
 
         [JsonProperty("ItemTax3")]
-        public int? ItemTax3;
+        public double? ItemTax3;
 
         [JsonProperty("PhysicalQtyRule")]
-        public int? PhysicalQtyRule;
+        public double? PhysicalQtyRule;
 
         [JsonProperty("CountedQuantity")]
-        public int? CountedQuantity;
+        public double? CountedQuantity;
 
         [JsonProperty("ConsignmentQuantity")]
-        public int? ConsignmentQuantity;
+        public double? ConsignmentQuantity;
 
         [JsonProperty("Quantity1")]
-        public int? Quantity1;
+        public double? Quantity1;
 
         [JsonProperty("Quantity2")]
-        public int? Quantity2;
+        public double? Quantity2;
 
         [JsonProperty("Quantity3")]
-        public int? Quantity3;
+        public double? Quantity3;
 
         [JsonProperty("Quantity4")]
-        public int? Quantity4;
+        public double? Quantity4;
 
         [JsonProperty("ComponentQty")]
-        public int? ComponentQty;
+        public double? ComponentQty;
 
         [JsonProperty("UnitCasesCount")]
-        public int? UnitCasesCount;
+        public double? UnitCasesCount;
 
         [JsonProperty("DiscountPercent")]
         public double? DiscountPercent;
@@ -180,7 +180,7 @@ namespace SaphetyToDDL.Lib.Models
         public double? DiscountValue;
 
         [JsonProperty("UnitDiscountValue")]
-        public int? UnitDiscountValue;
+        public double? UnitDiscountValue;
 
         [JsonProperty("OriginalUnitPrice")]
         public double? OriginalUnitPrice;
@@ -192,25 +192,25 @@ namespace SaphetyToDDL.Lib.Models
         public double? OriginalDiscountPercent;
 
         [JsonProperty("FamilyID")]
-        public int? FamilyID;
+        public double? FamilyID;
 
         [JsonProperty("FamilyName")]
         public string FamilyName;
 
         [JsonProperty("FamilyMaximumDiscount")]
-        public int? FamilyMaximumDiscount;
+        public double? FamilyMaximumDiscount;
 
         [JsonProperty("MandatoryCustomer")]
         public bool? MandatoryCustomer;
 
         [JsonProperty("WarehouseID")]
-        public int? WarehouseID;
+        public double? WarehouseID;
 
         [JsonProperty("WarehouseOutgoing")]
-        public int? WarehouseOutgoing;
+        public double? WarehouseOutgoing;
 
         [JsonProperty("WarehouseReceipt")]
-        public int? WarehouseReceipt;
+        public double? WarehouseReceipt;
 
         [JsonProperty("CumulativeDiscountPercent1")]
         public double? CumulativeDiscountPercent1;
@@ -231,31 +231,31 @@ namespace SaphetyToDDL.Lib.Models
         public double? PaymentDiscountPercent3;
 
         [JsonProperty("PartyTypeCode")]
-        public int? PartyTypeCode;
+        public double? PartyTypeCode;
 
         [JsonProperty("PartyID")]
-        public int? PartyID;
+        public double? PartyID;
 
         [JsonProperty("CustomerImputeID")]
-        public int? CustomerImputeID;
+        public double? CustomerImputeID;
 
         [JsonProperty("ImputeToCustomerID")]
-        public int? ImputeToCustomerID;
+        public double? ImputeToCustomerID;
 
         [JsonProperty("BillToPartyID")]
-        public int? BillToPartyID;
+        public double? BillToPartyID;
 
         [JsonProperty("SalesmanId")]
-        public int? SalesmanId;
+        public double? SalesmanId;
 
         [JsonProperty("TotalGrossAmount")]
         public double? TotalGrossAmount;
 
         [JsonProperty("TotalLineItemDiscountAmount")]
-        public int? TotalLineItemDiscountAmount;
+        public double? TotalLineItemDiscountAmount;
 
         [JsonProperty("TotalGlobalDiscountAmount")]
-        public int? TotalGlobalDiscountAmount;
+        public double? TotalGlobalDiscountAmount;
 
         [JsonProperty("TotalNetAmount")]
         public double? TotalNetAmount;
@@ -270,7 +270,7 @@ namespace SaphetyToDDL.Lib.Models
         public double? TotalTaxAmount;
 
         [JsonProperty("TotalOtherTaxAmount")]
-        public int? TotalOtherTaxAmount;
+        public double? TotalOtherTaxAmount;
 
         [JsonProperty("TotalAmount")]
         public double? TotalAmount;
@@ -279,55 +279,55 @@ namespace SaphetyToDDL.Lib.Models
         public double? TotalTaxIncludedAmount;
 
         [JsonProperty("ShareFreightAmount")]
-        public int? ShareFreightAmount;
+        public double? ShareFreightAmount;
 
-        [JsonProperty("BaseCurrency")]
-        public BaseCurrency BaseCurrency;
+        //[JsonProperty("BaseCurrency")]
+        //public BaseCurrency BaseCurrency;
 
         [JsonProperty("QntyReorderPoint")]
-        public int? QntyReorderPoint;
+        public double? QntyReorderPoint;
 
         [JsonProperty("QntyAvailableBalanceCount")]
-        public int? QntyAvailableBalanceCount;
+        public double? QntyAvailableBalanceCount;
 
         [JsonProperty("QntyPhysicalBalanceCount")]
-        public int? QntyPhysicalBalanceCount;
+        public double? QntyPhysicalBalanceCount;
 
         [JsonProperty("QntyWrPhysicalBalanceCount")]
-        public int? QntyWrPhysicalBalanceCount;
+        public double? QntyWrPhysicalBalanceCount;
 
         [JsonProperty("QntyWrAvailableBalanceCount")]
-        public int? QntyWrAvailableBalanceCount;
+        public double? QntyWrAvailableBalanceCount;
 
         [JsonProperty("QntyPhysicalBalanceDiff")]
-        public int? QntyPhysicalBalanceDiff;
+        public double? QntyPhysicalBalanceDiff;
 
         [JsonProperty("UnitsAvailableBalanceCount")]
-        public int? UnitsAvailableBalanceCount;
+        public double? UnitsAvailableBalanceCount;
 
         [JsonProperty("UnitsPhysicalBalanceCount")]
-        public int? UnitsPhysicalBalanceCount;
+        public double? UnitsPhysicalBalanceCount;
 
         [JsonProperty("UnitsWrPhysicalBalanceCount")]
-        public int? UnitsWrPhysicalBalanceCount;
+        public double? UnitsWrPhysicalBalanceCount;
 
         [JsonProperty("UnitsWrAvailableBalanceCount")]
-        public int? UnitsWrAvailableBalanceCount;
+        public double? UnitsWrAvailableBalanceCount;
 
         [JsonProperty("UnitsPhysicalBalanceDiff")]
-        public int? UnitsPhysicalBalanceDiff;
+        public double? UnitsPhysicalBalanceDiff;
 
         [JsonProperty("AverageCostPrice")]
-        public int? AverageCostPrice;
+        public double? AverageCostPrice;
 
         [JsonProperty("LastCostPrice")]
-        public int? LastCostPrice;
+        public double? LastCostPrice;
 
         [JsonProperty("AverageCostStockValue")]
-        public int? AverageCostStockValue;
+        public double? AverageCostStockValue;
 
         [JsonProperty("LastCostStockValue")]
-        public int? LastCostStockValue;
+        public double? LastCostStockValue;
 
         [JsonProperty("DatePhysicalBalanceCount")]
         public System.DateTime? DatePhysicalBalanceCount;
@@ -336,10 +336,10 @@ namespace SaphetyToDDL.Lib.Models
         public System.DateTime? TimeAdjustmentBalanceCount;
 
         [JsonProperty("FrequentShopperPoints")]
-        public int? FrequentShopperPoints;
+        public double? FrequentShopperPoints;
 
         [JsonProperty("VoucherGiftValue")]
-        public int? VoucherGiftValue;
+        public double? VoucherGiftValue;
 
         [JsonProperty("TransactionDetailClosed")]
         public bool? TransactionDetailClosed;
@@ -350,8 +350,8 @@ namespace SaphetyToDDL.Lib.Models
         //[JsonProperty("ItemExtraInfo")]
         //public ItemExtraInfo? ItemExtraInfo;
 
-        [JsonProperty("ItemProperties")]
-        public ItemProperties ItemProperties;
+        //[JsonProperty("ItemProperties")]
+        //public ItemProperties ItemProperties;
 
         [JsonProperty("ItemContractGuid")]
         public string ItemContractGuid;
@@ -366,10 +366,10 @@ namespace SaphetyToDDL.Lib.Models
         public bool? SecondHandTaxRegimen;
 
         [JsonProperty("PriceAndDiscountChangeFlags")]
-        public int? PriceAndDiscountChangeFlags;
+        public double? PriceAndDiscountChangeFlags;
 
         [JsonProperty("OfferTypeFlags")]
-        public int? OfferTypeFlags;
+        public double? OfferTypeFlags;
 
         [JsonProperty("PromotionApplied")]
         public bool? PromotionApplied;
@@ -384,7 +384,7 @@ namespace SaphetyToDDL.Lib.Models
         public string PlantProtectionSaleAuthNumber;
 
         [JsonProperty("ProductCategory")]
-        public int? ProductCategory;
+        public double? ProductCategory;
 
         [JsonProperty("ExtendedProperties")]
         public System.Collections.Generic.List<object> ExtendedProperties;
@@ -396,22 +396,22 @@ namespace SaphetyToDDL.Lib.Models
         public string Guid;
 
         [JsonProperty("Quantity")]
-        public int? Quantity;
+        public double? Quantity;
 
         [JsonProperty("Units")]
-        public int? Units;
+        public double? Units;
 
         [JsonProperty("StockUnits")]
-        public int? StockUnits;
+        public double? StockUnits;
 
         [JsonProperty("UnitConversion")]
-        public int? UnitConversion;
+        public double? UnitConversion;
 
         [JsonProperty("PackQuantity")]
-        public int? PackQuantity;
+        public double? PackQuantity;
 
         [JsonProperty("QuantityFactor")]
-        public int? QuantityFactor;
+        public double? QuantityFactor;
 
         [JsonProperty("PackUnitPrice")]
         public double? PackUnitPrice;
@@ -453,7 +453,7 @@ namespace SaphetyToDDL.Lib.Models
         public System.Collections.Generic.List<object> ExtraFieldList;
 
         [JsonProperty("RetentionTax")]
-        public int? RetentionTax;
+        public double? RetentionTax;
 
         [JsonProperty("Notes")]
         public List<string> DetailNotes;

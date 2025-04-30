@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using AutoMapper;
+using Newtonsoft.Json;
 using SaphetyToDDL.Lib.Models;
 using SaphetyToDDL.Lib.Models.Saphety;
 
@@ -112,10 +113,15 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="itemTransaction">The ItemTransaction object to map.</param>
         /// <returns>The mapped InvoiceType object.</returns>
-        public Invoice MapFromDdl(ItemTransaction itemTransaction)
+        public static Invoice MapFromDdl(ItemTransaction itemTransaction)
         {
             var config = MapConfig();
             return config.CreateMapper().Map<Invoice>(itemTransaction);
+        }
+
+        public static Invoice MapFromDdlString(string itemTransactionString)
+        {
+            return MapFromDdl(JsonConvert.DeserializeObject<ItemTransaction>(itemTransactionString));
         }
 
         /// <summary>
@@ -123,7 +129,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="invoice">The Invoice object to serialize.</param>
         /// <returns>The serialized XML string.</returns>
-        public string SerializeInvoiceToXml(Invoice invoice)
+        public static string SerializeInvoiceToXml(Invoice invoice)
         {
             var serializer = new XmlSerializer(typeof(Invoice));
             using (var stringWriter = new StringWriter())
@@ -141,7 +147,7 @@ namespace SaphetyToDDL.Lib
         /// Maps an InvoiceType object to an ItemTransaction object.
         /// </summary>
         /// <returns>The mapper configuration</returns>
-        private MapperConfiguration MapConfig()
+        private static MapperConfiguration MapConfig()
         {
             return new MapperConfiguration(cfg =>
             {
@@ -154,6 +160,9 @@ namespace SaphetyToDDL.Lib
                     .ForMember(destination => destination.TotalAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalNetAmount))
                     .ForMember(destination => destination.TotalTransactionAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalAmountPayable))
                     .ForMember(destination => destination.TotalTaxAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalVatAmount))
+                    .ForMember(destination => destination.ISignableTransactionTransactionID, opt => opt.MapFrom(src => src.DocumentNumber))
+                    .ForPath(destination => destination.Payment.PaymentDays, opt => opt.MapFrom(src => $"D{src.PaymentTerms.Value}"))
+                    .ForPath(destination => destination.Payment.Description, opt => opt.MapFrom(src => src.PaymentTerms.Description))
                     .ForPath(destination => destination.Party, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
                     .ForPath(destination => destination.CustomerParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
                     .ForPath(destination => destination.SupplierParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Seller)))
@@ -164,6 +173,7 @@ namespace SaphetyToDDL.Lib
                 // Mapping: ItemTransaction ➔ Invoice (Reverse mapping)
                 cfg.CreateMap<ItemTransaction, Invoice>()
                     .ForPath(destination => destination.BinaryDocumentFormat.ContentData, opt => opt.MapFrom(src => src.Base64))
+                    .ForPath(destination => destination.BinaryDocumentFormat.Name, opt => opt.MapFrom(src => src.ISignableTransactionTransactionID))
                     .ForPath(destination => destination.DocumentDates.DocumentDate, opt => opt.MapFrom(src => src.CreateDate))
                     .ForPath(destination => destination.DocumentDates.DueDate, opt => opt.MapFrom(src => src.DeferredPaymentDate))
                     .ForPath(destination => destination.DocumentReferences.OrderReference, opt => opt.MapFrom(src => src.ContractReferenceNumber))
@@ -171,6 +181,9 @@ namespace SaphetyToDDL.Lib
                     .ForPath(destination => destination.DocumentTotals.TotalAmountPayable, opt => opt.MapFrom(src => src.TotalTransactionAmount))
                     .ForPath(destination => destination.DocumentTotals.TotalVatAmount, opt => opt.MapFrom(src => src.TotalTaxAmount))
                     .ForPath(destination => destination.DocumentTotals.TotalVatTaxableAmount, opt => opt.MapFrom(src => src.TotalAmount))
+                    .ForPath(destination => destination.DocumentNumber, opt => opt.MapFrom(src => src.ISignableTransactionTransactionID))
+                    .ForPath(destination => destination.PaymentTerms.Value, opt => opt.MapFrom(src => $"D{(int)src.Payment.PaymentDays}"))
+                    .ForPath(destination => destination.PaymentTerms.Description, opt => opt.MapFrom(src => src.Payment.Description))
                     .ForPath(destination => destination.DocumentTotals.VatSummary, opt => opt.MapFrom(src => new VatSummary
                     {
                         TaxPercentage = 23m,  // Default fixed value
@@ -178,7 +191,7 @@ namespace SaphetyToDDL.Lib
                         TaxableAmount = (decimal)src.TotalAmount
                     }))
                     .ForPath(destination => destination.PartyInformation.Buyer, opt => opt.MapFrom(src => MapPartyReverse(src.Party)))
-                    .ForPath(destination => destination.PartyInformation.Seller, opt => opt.MapFrom(src => MapPartyReverse(src.SupplierParty)))
+                    .ForPath(destination => destination.PartyInformation.Seller, opt => opt.MapFrom(src => MapPartyReverse(src.SupplierParty == null ? src.Party : src.SupplierParty)))
                     .ForPath(destination => destination.PartyInformation.ShipTo, opt => opt.MapFrom(src => MapUnloadPlaceAddressReverse(src.UnloadPlaceAddress)))
                     .ForPath(destination => destination.LineItems, opt => opt.MapFrom(src => MapInvoiceLinesReverse(src.Details)))
                     .ForAllOtherMembers(opt => opt.Ignore());
@@ -191,7 +204,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="party">The PartyType object to map.</param>
         /// <returns>The mapped Party object.</returns>
-        private Models.Party MapParty(Models.Saphety.Party party)
+        private static Models.Party MapParty(Models.Saphety.Party party)
         {
             return new Models.Party
             {
@@ -208,7 +221,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="party">The Party object to map.</param>
         /// <returns>The mapped PartyType object.</returns>
-        private Models.Saphety.Party MapPartyReverse(Models.Party party)
+        private static Models.Saphety.Party MapPartyReverse(Models.Party party)
         {
             return new Models.Saphety.Party
             {
@@ -225,7 +238,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="address"></param>
         /// <returns></returns>
-        private UnloadPlaceAddress MapUnloadPlaceAddress(Models.Saphety.Party address)
+        private static UnloadPlaceAddress MapUnloadPlaceAddress(Models.Saphety.Party address)
         {
             return new UnloadPlaceAddress
             {
@@ -240,7 +253,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="address">The UnloadPlaceAddress object to map.</param>
         /// <returns>The mapped PartyType object.</returns>
-        private Models.Saphety.Party MapUnloadPlaceAddressReverse(UnloadPlaceAddress address)
+        private static Models.Saphety.Party MapUnloadPlaceAddressReverse(UnloadPlaceAddress address)
         {
             return new Models.Saphety.Party
             {
@@ -255,7 +268,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="invoiceLines"></param>
         /// <returns></returns>
-        private List<Detail> MapInvoiceLines(IEnumerable<LineItem> invoiceLines)
+        private static List<Detail> MapInvoiceLines(IEnumerable<LineItem> invoiceLines)
         {
             var details = new List<Detail>();
 
@@ -266,7 +279,7 @@ namespace SaphetyToDDL.Lib
                 var detail = new Detail
                 {
                     // Map properties from InvoiceLineType to Detail here
-                    Quantity = (int?)line?.Quantity?.Value,
+                    Quantity = (double?)line?.Quantity?.Value,
                     UnitPrice = (double)line?.NetPrice,
                     TotalNetAmount = (double)line?.NetLineAmount,
                     ItemID = line?.TradeItemIdentification,
@@ -298,7 +311,7 @@ namespace SaphetyToDDL.Lib
         /// </summary>
         /// <param name="invoiceLines">The collection of Detail objects to map.</param>
         /// <returns>The mapped collection of InvoiceLineType objects.</returns>
-        private List<LineItem> MapInvoiceLinesReverse(IEnumerable<Detail> invoiceLines)
+        private static List<LineItem> MapInvoiceLinesReverse(IEnumerable<Detail> invoiceLines)
         {
             var details = new List<LineItem>();
             foreach (var line in invoiceLines)

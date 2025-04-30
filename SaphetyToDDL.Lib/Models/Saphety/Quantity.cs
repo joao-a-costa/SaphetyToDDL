@@ -8,6 +8,6 @@ namespace SaphetyToDDL.Lib.Models.Saphety
         public decimal Value { get; set; }
 
         [XmlElement("unitCodeValue")]
-        public string UnitCodeValue { get; set; }
+        public string UnitCodeValue { get; set; } = "UN";
     }
 }

@@ -8,7 +8,7 @@ namespace SaphetyToDDL.Lib.Models
     public class TaxList
     {
         [JsonProperty("TaxSequenceID")]
-        public int? TaxSequenceID;
+        public double? TaxSequenceID;
 
         [JsonProperty("TaxRate")]
         public double? TaxRate;
@@ -17,7 +17,7 @@ namespace SaphetyToDDL.Lib.Models
         public bool? Printable;
 
         [JsonProperty("CalculusType")]
-        public int? CalculusType;
+        public double? CalculusType;
 
         [JsonProperty("CalculateIncidence")]
         public bool? CalculateIncidence;
@@ -26,10 +26,10 @@ namespace SaphetyToDDL.Lib.Models
         public bool? TaxOverOtherTaxes;
 
         [JsonProperty("TaxSequenceNumber")]
-        public int? TaxSequenceNumber;
+        public double? TaxSequenceNumber;
 
         [JsonProperty("TaxRoundingDigits")]
-        public int? TaxRoundingDigits;
+        public double? TaxRoundingDigits;
 
         [JsonProperty("TaxCalcFormula")]
         public string TaxCalcFormula;
@@ -50,7 +50,7 @@ namespace SaphetyToDDL.Lib.Models
         public bool? SecondHandTaxRegimen;
 
         [JsonProperty("TaxItemType")]
-        public int? TaxItemType;
+        public double? TaxItemType;
 
         [JsonProperty("TaxCountryID")]
         public string TaxCountryID;

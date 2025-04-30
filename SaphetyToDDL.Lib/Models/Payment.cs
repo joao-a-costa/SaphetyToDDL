@@ -8,7 +8,7 @@ namespace SaphetyToDDL.Lib.Models
     public class Payment
     {
         [JsonProperty("PaymentID")]
-        public int? PaymentID;
+        public double? PaymentID;
 
         [JsonProperty("PaymentKey")]
         public string PaymentKey;
@@ -17,10 +17,10 @@ namespace SaphetyToDDL.Lib.Models
         public string Description;
 
         [JsonProperty("PaymentDays")]
-        public int? PaymentDays;
+        public double? PaymentDays;
 
         [JsonProperty("PaymentDaysAfter")]
-        public int? PaymentDaysAfter;
+        public double? PaymentDaysAfter;
 
         [JsonProperty("IssueReceipt")]
         public bool? IssueReceipt;
@@ -35,16 +35,16 @@ namespace SaphetyToDDL.Lib.Models
         public System.Collections.Generic.List<object> InstallmentList;
 
         [JsonProperty("PaymentDateType")]
-        public int? PaymentDateType;
+        public double? PaymentDateType;
 
         [JsonProperty("Installments")]
-        public int? Installments;
+        public double? Installments;
 
         [JsonProperty("InstallmentsType")]
-        public int? InstallmentsType;
+        public double? InstallmentsType;
 
         [JsonProperty("TenderID")]
-        public int? TenderID;
+        public double? TenderID;
     }
 
 

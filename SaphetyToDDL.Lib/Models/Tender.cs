@@ -8,7 +8,7 @@ namespace SaphetyToDDL.Lib.Models
     public class Tender
     {
         [JsonProperty("TenderID")]
-        public int? TenderID;
+        public double? TenderID;
 
         [JsonProperty("TenderKey")]
         public string TenderKey;
@@ -17,25 +17,25 @@ namespace SaphetyToDDL.Lib.Models
         public string Description;
 
         [JsonProperty("MinimumSaleAmount")]
-        public int? MinimumSaleAmount;
+        public double? MinimumSaleAmount;
 
         [JsonProperty("MaximumAcceptAmount")]
-        public int? MaximumAcceptAmount;
+        public double? MaximumAcceptAmount;
 
         [JsonProperty("MaxAcceptAmntCurrencyID")]
         public string MaxAcceptAmntCurrencyID;
 
         [JsonProperty("MaxAcceptAmntCurrencyFactor")]
-        public int? MaxAcceptAmntCurrencyFactor;
+        public double? MaxAcceptAmntCurrencyFactor;
 
         [JsonProperty("MaxAcceptAmntCurrencyExchange")]
-        public int? MaxAcceptAmntCurrencyExchange;
+        public double? MaxAcceptAmntCurrencyExchange;
 
         [JsonProperty("CanReturnMoneyChange")]
         public bool? CanReturnMoneyChange;
 
         [JsonProperty("TenderUse")]
-        public int? TenderUse;
+        public double? TenderUse;
 
         [JsonProperty("UseDOCToPay")]
         public bool? UseDOCToPay;
@@ -44,7 +44,7 @@ namespace SaphetyToDDL.Lib.Models
         public string DocIDUsedToPay;
 
         [JsonProperty("TenderType")]
-        public int? TenderType;
+        public double? TenderType;
 
         [JsonProperty("CustomerIdentificationRequired")]
         public bool? CustomerIdentificationRequired;
@@ -89,7 +89,7 @@ namespace SaphetyToDDL.Lib.Models
         public System.Collections.Generic.List<object> Properties;
 
         [JsonProperty("ChargeDaysAfterDueDate")]
-        public int? ChargeDaysAfterDueDate;
+        public double? ChargeDaysAfterDueDate;
     }
 
 

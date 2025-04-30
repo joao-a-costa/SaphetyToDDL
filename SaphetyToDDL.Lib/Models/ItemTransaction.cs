@@ -9,16 +9,16 @@ namespace SaphetyToDDL.Lib.Models
     public class ItemTransaction
     {
         [JsonProperty("TransDocType")]
-        public int? TransDocType;
+        public double? TransDocType;
 
         [JsonProperty("TransBehavior")]
-        public int? TransBehavior;
+        public double? TransBehavior;
 
         [JsonProperty("TransactionGuid")]
         public string TransactionGuid;
 
         [JsonProperty("TempTransIndex")]
-        public int? TempTransIndex;
+        public double? TempTransIndex;
 
         [JsonProperty("CreateDate")]
         public System.DateTime? CreateDate;
@@ -36,10 +36,10 @@ namespace SaphetyToDDL.Lib.Models
         public string ContractReferenceNumber;
 
         [JsonProperty("DefaultWarehouse")]
-        public int? DefaultWarehouse;
+        public double? DefaultWarehouse;
 
         [JsonProperty("PartyAddressID")]
-        public int? PartyAddressID;
+        public double? PartyAddressID;
 
         [JsonProperty("PartyAddressLine1")]
         public string PartyAddressLine1;
@@ -57,7 +57,7 @@ namespace SaphetyToDDL.Lib.Models
         public string PartyDelivery;
 
         [JsonProperty("BillToPartyAddressID")]
-        public int? BillToPartyAddressID;
+        public double? BillToPartyAddressID;
 
         [JsonProperty("BillToPartyAddressLine1")]
         public object BillToPartyAddressLine1;
@@ -68,11 +68,11 @@ namespace SaphetyToDDL.Lib.Models
         [JsonProperty("BillToPartyPostalCode")]
         public object BillToPartyPostalCode;
 
-        [JsonProperty("Zone")]
-        public Zone Zone;
+        //[JsonProperty("Zone")]
+        //public Zone Zone;
 
-        [JsonProperty("BaseCurrency")]
-        public BaseCurrency BaseCurrency;
+        //[JsonProperty("BaseCurrency")]
+        //public BaseCurrency BaseCurrency;
 
         //[JsonProperty("AlternCurrency")]
         //public AlternCurrency? AlternCurrency;
@@ -86,8 +86,8 @@ namespace SaphetyToDDL.Lib.Models
         [JsonProperty("Tender")]
         public Tender Tender;
 
-        [JsonProperty("Carrier")]
-        public Carrier Carrier;
+        //[JsonProperty("Carrier")]
+        //public Carrier Carrier;
 
         [JsonProperty("LoadPlace")]
         public LoadPlace LoadPlace;
@@ -123,7 +123,7 @@ namespace SaphetyToDDL.Lib.Models
         public string RectificationMotive;
 
         [JsonProperty("RetentionTax")]
-        public int? RetentionTax;
+        public double? RetentionTax;
 
         [JsonProperty("GlobalDiscountPercent")]
         public double? GlobalDiscountPercent;
@@ -162,16 +162,16 @@ namespace SaphetyToDDL.Lib.Models
         public double? TotalTaxAmount;
 
         [JsonProperty("TotalOtherTaxesAmount")]
-        public int? TotalOtherTaxesAmount;
+        public double? TotalOtherTaxesAmount;
 
         [JsonProperty("TotalFreightAmount")]
-        public int? TotalFreightAmount;
+        public double? TotalFreightAmount;
 
         [JsonProperty("TotalFreightAmountWithTax")]
-        public int? TotalFreightAmountWithTax;
+        public double? TotalFreightAmountWithTax;
 
         [JsonProperty("FreightTaxableGroupID")]
-        public int? FreightTaxableGroupID;
+        public double? FreightTaxableGroupID;
 
         [JsonProperty("FreightTaxes")]
         public System.Collections.Generic.List<object> FreightTaxes;
@@ -180,37 +180,37 @@ namespace SaphetyToDDL.Lib.Models
         public System.Collections.Generic.List<object> FreightTaxList;
 
         [JsonProperty("TotalAdjustmentAmount")]
-        public int? TotalAdjustmentAmount;
+        public double? TotalAdjustmentAmount;
 
         [JsonProperty("TotalAmount")]
         public double? TotalAmount;
 
         [JsonProperty("TotalRetentionAmount")]
-        public int? TotalRetentionAmount;
+        public double? TotalRetentionAmount;
 
         [JsonProperty("TotalAdvancementRetentionAmount")]
-        public int? TotalAdvancementRetentionAmount;
+        public double? TotalAdvancementRetentionAmount;
 
         [JsonProperty("TotalAllowanceAmount")]
-        public int? TotalAllowanceAmount;
+        public double? TotalAllowanceAmount;
 
         [JsonProperty("TotalChargeAmount")]
-        public int? TotalChargeAmount;
+        public double? TotalChargeAmount;
 
         [JsonProperty("TotalTransactionAmount")]
         public double? TotalTransactionAmount;
 
         [JsonProperty("TotalPayedAmount")]
-        public int? TotalPayedAmount;
+        public double? TotalPayedAmount;
 
         [JsonProperty("SecondIssue")]
         public bool? SecondIssue;
 
         [JsonProperty("TransStatus")]
-        public int? TransStatus;
+        public double? TransStatus;
 
         [JsonProperty("StatusFlags")]
-        public int? StatusFlags;
+        public double? StatusFlags;
 
         [JsonProperty("SecondHandTaxRegimen")]
         public bool? SecondHandTaxRegimen;
@@ -249,16 +249,16 @@ namespace SaphetyToDDL.Lib.Models
         public System.Collections.Generic.List<object> RedeemedVouchers;
 
         [JsonProperty("FrequentShopperPoints")]
-        public int? FrequentShopperPoints;
+        public double? FrequentShopperPoints;
 
         [JsonProperty("DiscountFreqShopperPoints")]
-        public int? DiscountFreqShopperPoints;
+        public double? DiscountFreqShopperPoints;
 
         [JsonProperty("AccountingExportDate")]
         public System.DateTime? AccountingExportDate;
 
         [JsonProperty("VoucherSpentValueAmount")]
-        public int? VoucherSpentValueAmount;
+        public double? VoucherSpentValueAmount;
 
         [JsonProperty("VoucherDocSpentList")]
         public System.Collections.Generic.List<object> VoucherDocSpentList;
@@ -276,16 +276,16 @@ namespace SaphetyToDDL.Lib.Models
         public string VoucherGiftTransDocument;
 
         [JsonProperty("VoucherGiftTransDocNumber")]
-        public int? VoucherGiftTransDocNumber;
+        public double? VoucherGiftTransDocNumber;
 
         [JsonProperty("VoucherGiftValue")]
-        public int? VoucherGiftValue;
+        public double? VoucherGiftValue;
 
         [JsonProperty("VoucherGiftFamilyList")]
         public object VoucherGiftFamilyList;
 
         [JsonProperty("TotalOtherCostAmount")]
-        public int? TotalOtherCostAmount;
+        public double? TotalOtherCostAmount;
 
         [JsonProperty("BuyShareOtherCostList")]
         public System.Collections.Generic.List<object> BuyShareOtherCostList;
@@ -297,13 +297,13 @@ namespace SaphetyToDDL.Lib.Models
         public string AccountingOperation;
 
         [JsonProperty("PrintedCopies")]
-        public int? PrintedCopies;
+        public double? PrintedCopies;
 
         [JsonProperty("OfferVoucherGiftValue")]
-        public int? OfferVoucherGiftValue;
+        public double? OfferVoucherGiftValue;
 
-        [JsonProperty("Till")]
-        public Till Till;
+        //[JsonProperty("Till")]
+        //public Till Till;
 
         [JsonProperty("SignatureInvoiceNo")]
         public string SignatureInvoiceNo;
@@ -315,22 +315,22 @@ namespace SaphetyToDDL.Lib.Models
         public string SystemEntryUser;
 
         [JsonProperty("TransmissionStatus")]
-        public int? TransmissionStatus;
+        public double? TransmissionStatus;
 
         [JsonProperty("ShipmentDocumentType")]
-        public int? ShipmentDocumentType;
+        public double? ShipmentDocumentType;
 
         [JsonProperty("RegistrationPlate")]
         public string RegistrationPlate;
 
         [JsonProperty("CashAccountingSchemeType")]
-        public int? CashAccountingSchemeType;
+        public double? CashAccountingSchemeType;
 
         [JsonProperty("CustomerPaidDeductibleAmount")]
-        public int? CustomerPaidDeductibleAmount;
+        public double? CustomerPaidDeductibleAmount;
 
         [JsonProperty("PaymentDiscountAmountChangeFlags")]
-        public int? PaymentDiscountAmountChangeFlags;
+        public double? PaymentDiscountAmountChangeFlags;
 
         [JsonProperty("PlantProtectionActivityAuth")]
         public string PlantProtectionActivityAuth;
@@ -339,7 +339,7 @@ namespace SaphetyToDDL.Lib.Models
         public string PlantProtectionApplicator;
 
         [JsonProperty("EInvoiceStatus")]
-        public int? EInvoiceStatus;
+        public double? EInvoiceStatus;
 
         [JsonProperty("EInvoiceStatusDate")]
         public System.DateTime? EInvoiceStatusDate;
@@ -360,10 +360,10 @@ namespace SaphetyToDDL.Lib.Models
         public System.DateTime? LoyaltyUploadDate;
 
         [JsonProperty("BalanceFreqShopperPoints")]
-        public int? BalanceFreqShopperPoints;
+        public double? BalanceFreqShopperPoints;
 
         [JsonProperty("OnlineReceiptTagType")]
-        public int? OnlineReceiptTagType;
+        public double? OnlineReceiptTagType;
 
         [JsonProperty("OnlineReceiptTag")]
         public string OnlineReceiptTag;
@@ -390,7 +390,7 @@ namespace SaphetyToDDL.Lib.Models
         public string QRCode;
 
         [JsonProperty("FrequentShopperProcessingState")]
-        public int? FrequentShopperProcessingState;
+        public double? FrequentShopperProcessingState;
 
         [JsonProperty("ATDocCodeId")]
         public string ATDocCodeId;
@@ -402,10 +402,10 @@ namespace SaphetyToDDL.Lib.Models
         //public BillToEntity? BillToEntity;
 
         [JsonProperty("PartyTypeCode")]
-        public int? PartyTypeCode;
+        public double? PartyTypeCode;
 
         [JsonProperty("BillToPartyTypeCode")]
-        public int? BillToPartyTypeCode;
+        public double? BillToPartyTypeCode;
 
         [JsonProperty("ExtendedProperties")]
         public System.Collections.Generic.List<object> ExtendedProperties;
@@ -414,10 +414,10 @@ namespace SaphetyToDDL.Lib.Models
         public object CustomerImpute;
 
         [JsonProperty("TotalAdvancementAmount")]
-        public int? TotalAdvancementAmount;
+        public double? TotalAdvancementAmount;
 
         [JsonProperty("TotalAdvancementNetAmount")]
-        public int? TotalAdvancementNetAmount;
+        public double? TotalAdvancementNetAmount;
 
         [JsonProperty("CustomerParty")]
         public Party CustomerParty;
@@ -432,10 +432,10 @@ namespace SaphetyToDDL.Lib.Models
         //public BillToParty? BillToParty;
 
         [JsonProperty("PartyID")]
-        public int? PartyID;
+        public double? PartyID;
 
         [JsonProperty("BillToPartyID")]
-        public int? BillToPartyID;
+        public double? BillToPartyID;
 
         [JsonProperty("PartyOrganizationName")]
         public string PartyOrganizationName;
@@ -450,10 +450,10 @@ namespace SaphetyToDDL.Lib.Models
         public object BillToPartyFederalTaxID;
 
         [JsonProperty("PartyFiscalStatus")]
-        public int? PartyFiscalStatus;
+        public double? PartyFiscalStatus;
 
         [JsonProperty("BillToPartyFiscalStatus")]
-        public int? BillToPartyFiscalStatus;
+        public double? BillToPartyFiscalStatus;
 
         [JsonProperty("PartyTelephone")]
         public string PartyTelephone;
@@ -471,7 +471,7 @@ namespace SaphetyToDDL.Lib.Models
         public double? PartyAccountBalance;
 
         [JsonProperty("BillToPartyAccountBalance")]
-        public int? BillToPartyAccountBalance;
+        public double? BillToPartyAccountBalance;
 
         [JsonProperty("PartyAccountCurrencyID")]
         public string PartyAccountCurrencyID;
@@ -480,7 +480,7 @@ namespace SaphetyToDDL.Lib.Models
         public string BillToPartyAccountCurrencyID;
 
         [JsonProperty("PartyFrequentShopperPoints")]
-        public int? PartyFrequentShopperPoints;
+        public double? PartyFrequentShopperPoints;
 
         [JsonProperty("PartyCountryID")]
         public string PartyCountryID;
@@ -495,13 +495,13 @@ namespace SaphetyToDDL.Lib.Models
         public object BillToPartyProvinceID;
 
         [JsonProperty("PartyLocalityID")]
-        public int? PartyLocalityID;
+        public double? PartyLocalityID;
 
         [JsonProperty("BillToPartyLocalityID")]
-        public int? BillToPartyLocalityID;
+        public double? BillToPartyLocalityID;
 
         [JsonProperty("PartyCarrierID")]
-        public int? PartyCarrierID;
+        public double? PartyCarrierID;
 
         [JsonProperty("PartyBankAccountNumber")]
         public object PartyBankAccountNumber;
@@ -519,7 +519,7 @@ namespace SaphetyToDDL.Lib.Models
         public object PartyBankName;
 
         [JsonProperty("PartyPriceItemDecimalPlaces")]
-        public int? PartyPriceItemDecimalPlaces;
+        public double? PartyPriceItemDecimalPlaces;
 
         [JsonProperty("PartyFreightOnLedgerAccount")]
         public bool? PartyFreightOnLedgerAccount;
@@ -531,7 +531,7 @@ namespace SaphetyToDDL.Lib.Models
         public object PartySupplierCustomerID;
 
         [JsonProperty("PartyVehicleID")]
-        public int? PartyVehicleID;
+        public double? PartyVehicleID;
 
         [JsonProperty("PartyVehicleLicensePlate")]
         public object PartyVehicleLicensePlate;
@@ -543,10 +543,10 @@ namespace SaphetyToDDL.Lib.Models
         public object PartyVehicleModel;
 
         [JsonProperty("PartyVehicleYear")]
-        public int? PartyVehicleYear;
+        public double? PartyVehicleYear;
 
         [JsonProperty("PartyVehicleMonth")]
-        public int? PartyVehicleMonth;
+        public double? PartyVehicleMonth;
 
         [JsonProperty("PartyVehicleDateOfFirstRegistration")]
         public System.DateTime? PartyVehicleDateOfFirstRegistration;
@@ -561,16 +561,16 @@ namespace SaphetyToDDL.Lib.Models
         public object PartyVehicleEngineNumber;
 
         [JsonProperty("PartyVehicleKilometers")]
-        public int? PartyVehicleKilometers;
+        public double? PartyVehicleKilometers;
 
         [JsonProperty("PartyVehicleOriginalKilometers")]
-        public int? PartyVehicleOriginalKilometers;
+        public double? PartyVehicleOriginalKilometers;
 
         [JsonProperty("PartyVehicleComments")]
         public object PartyVehicleComments;
 
         [JsonProperty("PartyWorkID")]
-        public int? PartyWorkID;
+        public double? PartyWorkID;
 
         [JsonProperty("PartyWorkComments")]
         public object PartyWorkComments;
@@ -579,7 +579,7 @@ namespace SaphetyToDDL.Lib.Models
         public object PartyWorkDescription;
 
         [JsonProperty("PartyWorkBudgetValue")]
-        public int? PartyWorkBudgetValue;
+        public double? PartyWorkBudgetValue;
 
         [JsonProperty("PartyWorkStartDate")]
         public System.DateTime? PartyWorkStartDate;
@@ -588,10 +588,10 @@ namespace SaphetyToDDL.Lib.Models
         public System.DateTime? PartyWorkEndDate;
 
         [JsonProperty("PartyCustomerLevel")]
-        public int? PartyCustomerLevel;
+        public double? PartyCustomerLevel;
 
         [JsonProperty("PartyPrintCopies")]
-        public int? PartyPrintCopies;
+        public double? PartyPrintCopies;
 
         [JsonProperty("OriginatingON")]
         public string OriginatingON;
@@ -612,10 +612,10 @@ namespace SaphetyToDDL.Lib.Models
         public object SignatureMessage;
 
         [JsonProperty("SignatureControl")]
-        public int? SignatureControl;
+        public double? SignatureControl;
 
         [JsonProperty("SoftwareCertificateNumber")]
-        public int? SoftwareCertificateNumber;
+        public double? SoftwareCertificateNumber;
 
         [JsonProperty("SystemEntryDate")]
         public System.DateTime? SystemEntryDate;
@@ -630,13 +630,13 @@ namespace SaphetyToDDL.Lib.Models
         public string TransDocument;
 
         [JsonProperty("TransDocNumber")]
-        public int? TransDocNumber;
+        public double? TransDocNumber;
 
         [JsonProperty("TotalServiceAmount")]
-        public int? TotalServiceAmount;
+        public double? TotalServiceAmount;
 
         [JsonProperty("RetentionPaidAmount")]
-        public int? RetentionPaidAmount;
+        public double? RetentionPaidAmount;
 
         [JsonProperty("CanBeCalculatedOnTaxIncluded")]
         public bool? CanBeCalculatedOnTaxIncluded;

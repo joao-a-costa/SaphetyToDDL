@@ -8,13 +8,13 @@ namespace SaphetyToDDL.Lib.Models
     public class UnloadPlaceAddress
     {
         [JsonProperty("AddressID")]
-        public int? AddressID;
+        public double? AddressID;
 
         [JsonProperty("AddressKey")]
         public object AddressKey;
 
         [JsonProperty("PartyID")]
-        public int? PartyID;
+        public double? PartyID;
 
         [JsonProperty("AddressLine1")]
         public string AddressLine1;
@@ -38,13 +38,13 @@ namespace SaphetyToDDL.Lib.Models
         public object ProvinceName;
 
         [JsonProperty("LocalityID")]
-        public int? LocalityID;
+        public double? LocalityID;
 
         [JsonProperty("LocalityName")]
         public object LocalityName;
 
         [JsonProperty("AddressType")]
-        public int? AddressType;
+        public double? AddressType;
 
         [JsonProperty("SendMail")]
         public bool? SendMail;

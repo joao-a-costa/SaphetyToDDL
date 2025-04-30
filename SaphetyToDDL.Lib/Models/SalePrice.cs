@@ -11,13 +11,13 @@ namespace SaphetyToDDL.Lib.Models
         public object LotID;
 
         [JsonProperty("PriceLineID")]
-        public int? PriceLineID;
+        public double? PriceLineID;
 
         [JsonProperty("SizeID")]
-        public int? SizeID;
+        public double? SizeID;
 
         [JsonProperty("ColorID")]
-        public int? ColorID;
+        public double? ColorID;
 
         [JsonProperty("UnitOfMeasureID")]
         public object UnitOfMeasureID;
@@ -32,10 +32,10 @@ namespace SaphetyToDDL.Lib.Models
         public object PropertyValue3;
 
         [JsonProperty("UnitPrice")]
-        public int? UnitPrice;
+        public double? UnitPrice;
 
         [JsonProperty("TaxIncludedPrice")]
-        public int? TaxIncludedPrice;
+        public double? TaxIncludedPrice;
 
         [JsonProperty("CreateDate")]
         public System.DateTime? CreateDate;
@@ -44,13 +44,13 @@ namespace SaphetyToDDL.Lib.Models
         public string CurrencyID;
 
         [JsonProperty("CurrencyFactor")]
-        public int? CurrencyFactor;
+        public double? CurrencyFactor;
 
         [JsonProperty("CurrencyExchange")]
-        public int? CurrencyExchange;
+        public double? CurrencyExchange;
 
         [JsonProperty("FixedProfitRate")]
-        public int? FixedProfitRate;
+        public double? FixedProfitRate;
 
         [JsonProperty("ExcludesGlobalDiscount")]
         public bool? ExcludesGlobalDiscount;

@@ -8,10 +8,10 @@ namespace SaphetyToDDL.Lib.Models
     public class PartyInfo
     {
         [JsonProperty("PartyID")]
-        public int? PartyID;
+        public double? PartyID;
 
         [JsonProperty("PartyType")]
-        public int? PartyType;
+        public double? PartyType;
 
         [JsonProperty("ContactList")]
         public System.Collections.Generic.List<object> ContactList;
