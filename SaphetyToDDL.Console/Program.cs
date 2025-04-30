@@ -1,23 +1,39 @@
-﻿using Newtonsoft.Json;
+﻿// Import necessary namespaces
+using Newtonsoft.Json;
+using SaphetyToDDL.Lib.Models;
 
+// Initialize the SaphetyToDDL engine
 var saphetyToDDL = new SaphetyToDDL.Lib.SaphetyToDDL();
-var itemTransaction = saphetyToDDL.Parse(SaphetyToDDL.Console.Properties.Resources.saphetySampleFile1);
-var itemtransactionSaphety = saphetyToDDL.ItemTransactionSaphety;
 
+// Setup JSON serialization settings (ignore nulls)
+var serializeOptions = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
-/// <summary>
-/// JSON serialization options.
-/// </summary>
-var serializeOptions = new JsonSerializerSettings
-{
-    NullValueHandling = NullValueHandling.Ignore,
-};
+Console.WriteLine("=== Parsing SAPHETY Sample File ===");
 
-/// <summary>
-/// Serialize the item transaction object to JSON format.
-/// </summary>
-var serializeJson = JsonConvert.SerializeObject(itemTransaction, Formatting.Indented, serializeOptions);
-//var serializeJson = JsonConvert.SerializeObject(itemTransaction, Formatting.Indented);
+// Parse SAPHETY sample XML into internal model
+var itemTransactionSaphety = saphetyToDDL.Parse(SaphetyToDDL.Console.Properties.Resources.saphetySampleFile1);
 
-Console.WriteLine(serializeJson);
+// Serialize parsed object into JSON (pretty-printed)
+var serializeJsonSaphety = JsonConvert.SerializeObject(itemTransactionSaphety, Formatting.Indented, serializeOptions);
+
+Console.WriteLine("--- SAPHETY Parsed JSON ---");
+Console.WriteLine(serializeJsonSaphety);
+Console.WriteLine();
+
+Console.WriteLine("=== Parsing DDL Sample File ===");
+
+// Deserialize DDL sample JSON into ItemTransaction
+var itemTransactionDdl = JsonConvert.DeserializeObject<ItemTransaction>(serializeJsonSaphety);
+
+// Map DDL ItemTransaction into an Invoice object
+var invoiceSaphety = saphetyToDDL.MapFromDdl(itemTransactionDdl);
+
+// Serialize Invoice object into XML format
+var serializeXmlDdl = saphetyToDDL.SerializeInvoiceToXml(invoiceSaphety);
+
+Console.WriteLine("--- DDL Mapped and Serialized to XML ---");
+Console.WriteLine(serializeXmlDdl);
+Console.WriteLine();
+
+Console.WriteLine("=== Done. Press any key to exit ===");
 Console.ReadLine();

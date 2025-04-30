@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace SaphetyToDDL.Lib.Models.Saphety
@@ -7,7 +8,7 @@ namespace SaphetyToDDL.Lib.Models.Saphety
     public class Invoice
     {
         [XmlAttribute("docInstanceId")]
-        public string DocInstanceId { get; set; }
+        public string DocInstanceId { get; set; } = Guid.NewGuid().ToString();
 
         [XmlAttribute("documentCorrelationId")]
         public string DocumentCorrelationId { get; set; }
@@ -22,7 +23,7 @@ namespace SaphetyToDDL.Lib.Models.Saphety
         public string SenderSoftwareDocumentSignatureHash { get; set; }
 
         [XmlElement("currencyISOCode")]
-        public string CurrencyISOCode { get; set; }
+        public string CurrencyISOCode { get; set; } = "EUR";
 
         [XmlElement("documentNumber")]
         public string DocumentNumber { get; set; }

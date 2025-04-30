@@ -87,25 +87,12 @@ namespace SaphetyToDDL.Lib
             }
             ItemTransactionSaphetyDocumentType = documentType;
 
-            //// Load the XML based on the root element
-            //if (root.Name.LocalName.ToLower() == DocumentType.Invoice.ToString().ToLower() || root.Name.LocalName.ToLower() == DocumentType.CreditNote.ToString().ToLower())
-            //{
-            //    var serializer = new XmlSerializer(typeof(Invoice));
-            //    using (var reader = new StringReader(fileContent))
-            //    {
-            //        invoice = (Invoice)serializer.Deserialize(reader);
-            //    }                
-            //    ItemTransactionSaphetyDocumentType = DocumentType.Invoice;
-            //}
-            //else
-            //    throw new InvalidOperationException(_infoUnrecognizedDocumentType);
-
             // Configure AutoMapper mappings
             switch (ItemTransactionSaphetyDocumentType)
             {
                 case DocumentType.Invoice:
                 case DocumentType.CreditNote:
-                    config = MapInvoice();
+                    config = MapConfig();
                     break;
                 default:
                     break;
@@ -120,6 +107,32 @@ namespace SaphetyToDDL.Lib
             return itemTransaction;
         }
 
+        /// <summary>
+        /// Maps an ItemTransaction object to an InvoiceType object.
+        /// </summary>
+        /// <param name="itemTransaction">The ItemTransaction object to map.</param>
+        /// <returns>The mapped InvoiceType object.</returns>
+        public Invoice MapFromDdl(ItemTransaction itemTransaction)
+        {
+            var config = MapConfig();
+            return config.CreateMapper().Map<Invoice>(itemTransaction);
+        }
+
+        /// <summary>
+        /// Serializes an Invoice object to XML format.
+        /// </summary>
+        /// <param name="invoice">The Invoice object to serialize.</param>
+        /// <returns>The serialized XML string.</returns>
+        public string SerializeInvoiceToXml(Invoice invoice)
+        {
+            var serializer = new XmlSerializer(typeof(Invoice));
+            using (var stringWriter = new StringWriter())
+            {
+                serializer.Serialize(stringWriter, invoice);
+                return stringWriter.ToString();
+            }
+        }
+
         #endregion
 
         #region "Private"
@@ -128,72 +141,82 @@ namespace SaphetyToDDL.Lib
         /// Maps an InvoiceType object to an ItemTransaction object.
         /// </summary>
         /// <returns>The mapper configuration</returns>
-        private MapperConfiguration MapInvoice()
+        private MapperConfiguration MapConfig()
         {
-            // Configure AutoMapper mappings
             return new MapperConfiguration(cfg =>
             {
+                // Mapping: Invoice ➔ ItemTransaction
                 cfg.CreateMap<Invoice, ItemTransaction>()
+                    .ForMember(destination => destination.Base64, opt => opt.MapFrom(src => src.BinaryDocumentFormat.ContentData))
                     .ForMember(destination => destination.CreateDate, opt => opt.MapFrom(src => src.DocumentDates.DocumentDate))
                     .ForMember(destination => destination.DeferredPaymentDate, opt => opt.MapFrom(src => src.DocumentDates.DueDate))
                     .ForMember(destination => destination.ContractReferenceNumber, opt => opt.MapFrom(src => src.DocumentReferences.OrderReference))
                     .ForMember(destination => destination.TotalAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalNetAmount))
                     .ForMember(destination => destination.TotalTransactionAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalAmountPayable))
-                    //.ForMember(destination => destination.TotalGlobalDiscountAmount, opt => opt.MapFrom(src => src.LegalMonetaryTotal.AllowanceTotalAmount.Value))
+                    .ForMember(destination => destination.TotalTaxAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalVatAmount))
                     .ForPath(destination => destination.Party, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
                     .ForPath(destination => destination.CustomerParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
                     .ForPath(destination => destination.SupplierParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Seller)))
                     .ForPath(destination => destination.UnloadPlaceAddress, opt => opt.MapFrom(src => MapUnloadPlaceAddress(src.PartyInformation.ShipTo)))
                     .ForPath(destination => destination.Details, opt => opt.MapFrom(src => MapInvoiceLines(src.LineItems)))
-                    .ForAllOtherMembers(opt => opt.Ignore()); // Ignore all other members, including methods
+                    .ForAllOtherMembers(opt => opt.Ignore());
+
+                // Mapping: ItemTransaction ➔ Invoice (Reverse mapping)
+                cfg.CreateMap<ItemTransaction, Invoice>()
+                    .ForPath(destination => destination.BinaryDocumentFormat.ContentData, opt => opt.MapFrom(src => src.Base64))
+                    .ForPath(destination => destination.DocumentDates.DocumentDate, opt => opt.MapFrom(src => src.CreateDate))
+                    .ForPath(destination => destination.DocumentDates.DueDate, opt => opt.MapFrom(src => src.DeferredPaymentDate))
+                    .ForPath(destination => destination.DocumentReferences.OrderReference, opt => opt.MapFrom(src => src.ContractReferenceNumber))
+                    .ForPath(destination => destination.DocumentTotals.TotalNetAmount, opt => opt.MapFrom(src => src.TotalAmount))
+                    .ForPath(destination => destination.DocumentTotals.TotalAmountPayable, opt => opt.MapFrom(src => src.TotalTransactionAmount))
+                    .ForPath(destination => destination.DocumentTotals.TotalVatAmount, opt => opt.MapFrom(src => src.TotalTaxAmount))
+                    .ForPath(destination => destination.DocumentTotals.TotalVatTaxableAmount, opt => opt.MapFrom(src => src.TotalAmount))
+                    .ForPath(destination => destination.DocumentTotals.VatSummary, opt => opt.MapFrom(src => new VatSummary
+                    {
+                        TaxPercentage = 23m,  // Default fixed value
+                        TaxTotalValue = (decimal)src.TotalTaxAmount,
+                        TaxableAmount = (decimal)src.TotalAmount
+                    }))
+                    .ForPath(destination => destination.PartyInformation.Buyer, opt => opt.MapFrom(src => MapPartyReverse(src.Party)))
+                    .ForPath(destination => destination.PartyInformation.Seller, opt => opt.MapFrom(src => MapPartyReverse(src.SupplierParty)))
+                    .ForPath(destination => destination.PartyInformation.ShipTo, opt => opt.MapFrom(src => MapUnloadPlaceAddressReverse(src.UnloadPlaceAddress)))
+                    .ForPath(destination => destination.LineItems, opt => opt.MapFrom(src => MapInvoiceLinesReverse(src.Details)))
+                    .ForAllOtherMembers(opt => opt.Ignore());
             });
         }
 
-        ///// <summary>
-        ///// Maps a CreditNoteType object to an ItemTransaction object.
-        ///// </summary>
-        ///// <returns>The mapper configuration</returns>
-        //private MapperConfiguration MapCreditNote()
-        //{
-        //    // Configure AutoMapper mappings
-        //    return new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.CreateMap<CreditNote, ItemTransaction>()
-        //            .ForMember(destination => destination.CreateDate, opt => opt.MapFrom(src => src.IssueDate.Value.DateTime))
-        //            //.ForMember(destination => destination.DeferredPaymentDate, opt => opt.MapFrom(src => src.DueDate.Value.DateTime))
-        //            .ForMember(destination => destination.ContractReferenceNumber, opt => opt.MapFrom(src => src.ID.Value))
-        //            .ForMember(destination => destination.TotalAmount, opt => opt.MapFrom(src => src.LegalMonetaryTotal.TaxExclusiveAmount.Value))
-        //            .ForMember(destination => destination.TotalTransactionAmount, opt => opt.MapFrom(src => src.LegalMonetaryTotal.TaxInclusiveAmount.Value))
-        //            .ForMember(destination => destination.TotalGlobalDiscountAmount, opt => opt.MapFrom(src => src.LegalMonetaryTotal.AllowanceTotalAmount.Value))
-        //            .ForPath(destination => destination.Party, opt => opt.MapFrom(src => MapParty(src.AccountingCustomerParty.Party, src.Delivery.Cast<DeliveryType>().FirstOrDefault().DeliveryLocation)))
-        //            .ForPath(destination => destination.CustomerParty, opt => opt.MapFrom(src => MapParty(src.AccountingCustomerParty.Party, src.Delivery.Cast<DeliveryType>().FirstOrDefault().DeliveryLocation)))
-        //            .ForPath(destination => destination.SupplierParty, opt => opt.MapFrom(src => MapParty(src.AccountingSupplierParty.Party, src.Delivery.Cast<DeliveryType>().FirstOrDefault().DeliveryLocation)))
-        //            .ForPath(destination => destination.UnloadPlaceAddress, opt => opt.MapFrom(src => MapUnloadPlaceAddress(src.Delivery.Cast<DeliveryType>().FirstOrDefault().DeliveryLocation.Address)))
-        //            .ForPath(destination => destination.Details, opt => opt.MapFrom(src => MapCreditNoteLines(src.CreditNoteLine)))
-        //            .ForAllOtherMembers(opt => opt.Ignore()); // Ignore all other members, including methods
-        //    });
-        //}
 
         /// <summary>
         /// Maps a PartyType object to a Party object.
         /// </summary>
-        /// <param name="partyType"></param>
-        /// <returns></returns>
-        //private Models.Party MapParty(Models.Saphety.Party partyType, LocationType locationType)
-        private Models.Party MapParty(Models.Saphety.Party partyType)
+        /// <param name="party">The PartyType object to map.</param>
+        /// <returns>The mapped Party object.</returns>
+        private Models.Party MapParty(Models.Saphety.Party party)
         {
-            var organizationName = partyType.Name;
-
             return new Models.Party
             {
-                // Map properties from PartyType to Party here
-                FederalTaxID = partyType.VatNumber,
-                OrganizationName = organizationName,
-                AddressLine1 = partyType.Address,
-                //AddressLine2 = partyType.PostalAddress?.AdditionalStreetName?.Value,
-                PostalCode = partyType.ZipCode,
-                CountryID = partyType.Country,
-                //GLN = locationType.ID?.Value
+                FederalTaxID = party.VatNumber,
+                OrganizationName = party.Name,
+                AddressLine1 = party.Address,
+                PostalCode = party.ZipCode,
+                CountryID = party.Country
+            };
+        }
+
+        /// <summary>
+        /// Maps a Party object to a PartyType object.
+        /// </summary>
+        /// <param name="party">The Party object to map.</param>
+        /// <returns>The mapped PartyType object.</returns>
+        private Models.Saphety.Party MapPartyReverse(Models.Party party)
+        {
+            return new Models.Saphety.Party
+            {
+                VatNumber = party.FederalTaxID,
+                Name = party.OrganizationName,
+                Address = party.AddressLine1,
+                ZipCode = party.PostalCode,
+                Country = party.CountryID
             };
         }
 
@@ -207,9 +230,23 @@ namespace SaphetyToDDL.Lib
             return new UnloadPlaceAddress
             {
                 AddressLine1 = address?.Address,
-                //AddressLine2 = address?.AdditionalStreetName?.Value,
                 PostalCode = address.ZipCode,
                 CountryID = address.Country,
+            };
+        }
+
+        /// <summary>
+        /// Maps an UnloadPlaceAddress object to a PartyType object.
+        /// </summary>
+        /// <param name="address">The UnloadPlaceAddress object to map.</param>
+        /// <returns>The mapped PartyType object.</returns>
+        private Models.Saphety.Party MapUnloadPlaceAddressReverse(UnloadPlaceAddress address)
+        {
+            return new Models.Saphety.Party
+            {
+                Address = address?.AddressLine1,
+                ZipCode = address.PostalCode,
+                Country = address.CountryID,
             };
         }
 
@@ -256,46 +293,37 @@ namespace SaphetyToDDL.Lib
             return details;
         }
 
-        ///// <summary>
-        ///// Maps a collection of CreditNoteLineType objects to a collection of Detail objects.
-        ///// </summary>
-        ///// <param name="creditNoteLines"></param>
-        ///// <returns></returns>
-        //private List<Detail> MapCreditNoteLines(IEnumerable<CreditNoteLineType> creditNoteLines)
-        //{
-        //    var details = new List<Detail>();
-
-        //    foreach (var line in creditNoteLines)
-        //    {
-        //        var description = line?.Item?.Description?.FirstOrDefault()?.Value ?? line?.Item?.Name?.Value;
-
-        //        var detail = new Detail
-        //        {
-        //            // Map properties from InvoiceLineType to Detail here
-        //            Quantity = (int?)line?.CreditedQuantity?.Value,
-        //            UnitPrice = (double)line?.Price?.PriceAmount?.Value,
-        //            TotalNetAmount = (double)line?.LineExtensionAmount?.Value,
-        //            ItemID = line?.Item.SellersItemIdentification?.ID?.Value ?? line?.Item.BuyersItemIdentification?.ID?.Value,
-        //            Description = description,
-        //            TaxList = new List<TaxList>
-        //            {
-        //                new TaxList
-        //                {
-        //                    TaxRate = (double?)(line?.Item?.ClassifiedTaxCategory?.FirstOrDefault()?.Percent?.Value),
-        //                    TaxCode = line?.Item?.ClassifiedTaxCategory?.FirstOrDefault()?.ID?.Value,
-        //                }
-        //            },
-        //            DetailNotes = line?.Note?.Select(n => n.Value).ToList()
-        //        };
-
-        //        if (line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value != null)
-        //            detail.DiscountPercent = (double)line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value;
-
-        //        details.Add(detail);
-        //    }
-
-        //    return details;
-        //}
+        /// <summary>
+        /// Maps a collection of Detail objects to a collection of InvoiceLineType objects.
+        /// </summary>
+        /// <param name="invoiceLines">The collection of Detail objects to map.</param>
+        /// <returns>The mapped collection of InvoiceLineType objects.</returns>
+        private List<LineItem> MapInvoiceLinesReverse(IEnumerable<Detail> invoiceLines)
+        {
+            var details = new List<LineItem>();
+            foreach (var line in invoiceLines)
+            {
+                var detail = new LineItem
+                {
+                    // Map properties from InvoiceLineType to Detail here
+                    Quantity = new Quantity
+                    {
+                        Value = (decimal)line.Quantity,
+                    },
+                    NetPrice = (decimal)line.UnitPrice,
+                    NetLineAmount = (decimal)line.TotalNetAmount,
+                    TradeItemIdentification = line.ItemID,
+                    ItemDescription = line.Description,
+                    LineVat = new LineVat
+                    {
+                        TaxPercentage = (decimal)line.TaxList[0].TaxRate,
+                        //TaxCode = line?.Item?.ClassifiedTaxCategory?.FirstOrDefault()?.ID?.Value,
+                    }
+                };
+                details.Add(detail);
+            }
+            return details;
+        }
 
         #endregion
     }

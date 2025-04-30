@@ -5,10 +5,10 @@ namespace SaphetyToDDL.Lib.Models.Saphety
 {
     public class DocumentDates
     {
-        [XmlElement("documentDate")]
+        [XmlElement("documentDate", DataType = "date")]
         public DateTime DocumentDate { get; set; }
 
-        [XmlElement("dueDate")]
+        [XmlElement("dueDate", DataType = "date")]
         public DateTime DueDate { get; set; }
     }
 }

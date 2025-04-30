@@ -655,5 +655,8 @@ namespace SaphetyToDDL.Lib.Models
 
         [JsonProperty("_ISignableTransaction_TransactionID")]
         public string ISignableTransactionTransactionID;
+
+        [JsonProperty("Base64")]
+        public string Base64;
     }
 }
