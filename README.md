@@ -1,7 +1,7 @@
 # Saphety to DDL
 
-[![NuGet Version](https://img.shields.io/nuget/v/SaphetyToDDL.svg)](https://www.nuget.org/packages/SaphetyToDDL/)
-[![NuGet Downloads](https://img.shields.io/nuget/dt/SaphetyToDDL.svg)](https://www.nuget.org/packages/SaphetyToDDL/)
+[![NuGet Version](https://img.shields.io/nuget/v/SaphetyToDDL.svg)](https://www.nuget.org/packages/SaphetyToDDL.Lib/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/SaphetyToDDL.svg)](https://www.nuget.org/packages/SaphetyToDDL.Lib/)
 
 The Saphety to DDL  is a .NET library for parsing Saphety invoices from XML format and converting them into accounting domain-driven objects, with the ability to serialize them into JSON format. This library offers a seamless solution for developers needing to integrate Saphety invoice parsing and conversion functionalities into their .NET applications.
 
