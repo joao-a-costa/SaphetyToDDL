@@ -8,6 +8,6 @@ namespace SaphetyToDDL.Lib.Models.Saphety
         public string Description { get; set; }
 
         [XmlElement("value")]
-        public string Value { get; set; }
+        public string Value { get; set; } = "PP";
     }
 }

@@ -23,6 +23,9 @@ namespace SaphetyToDDL.Lib.Models.Saphety
         public string ZipCode { get; set; }
 
         [XmlElement("zipArea")]
-        public string ZipArea { get; set; }
+        public string ZipArea { get; set; } = string.Empty;
+
+        [XmlElement("gln")]
+        public string Gln { get; set; } = string.Empty;
     }
 }

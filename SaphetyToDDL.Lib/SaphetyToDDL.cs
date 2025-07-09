@@ -162,7 +162,7 @@ namespace SaphetyToDDL.Lib
                     .ForMember(destination => destination.TotalTransactionAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalAmountPayable))
                     .ForMember(destination => destination.TotalTaxAmount, opt => opt.MapFrom(src => src.DocumentTotals.TotalVatAmount))
                     .ForMember(destination => destination.ISignableTransactionTransactionID, opt => opt.MapFrom(src => src.DocumentNumber))
-                    .ForPath(destination => destination.Payment.PaymentDays, opt => opt.MapFrom(src => $"{Regex.Replace(src.PaymentTerms.Value, "[a-zA-Z]", "")}"))
+                    //.ForPath(destination => destination.Payment.PaymentDays, opt => opt.MapFrom(src => $"{Regex.Replace(src.PaymentTerms.Value, "[a-zA-Z]", "")}"))
                     .ForPath(destination => destination.Payment.Description, opt => opt.MapFrom(src => src.PaymentTerms.Description))
                     .ForPath(destination => destination.Party, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
                     .ForPath(destination => destination.CustomerParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
@@ -183,7 +183,7 @@ namespace SaphetyToDDL.Lib
                     .ForPath(destination => destination.DocumentTotals.TotalVatAmount, opt => opt.MapFrom(src => src.TotalTaxAmount))
                     .ForPath(destination => destination.DocumentTotals.TotalVatTaxableAmount, opt => opt.MapFrom(src => src.TotalAmount))
                     .ForPath(destination => destination.DocumentNumber, opt => opt.MapFrom(src => src.ISignableTransactionTransactionID))
-                    .ForPath(destination => destination.PaymentTerms.Value, opt => opt.MapFrom(src => $"{src.Payment.PaymentDays}"))
+                    //.ForPath(destination => destination.PaymentTerms.Value, opt => opt.MapFrom(src => $"{src.Payment.PaymentDays}"))
                     .ForPath(destination => destination.PaymentTerms.Description, opt => opt.MapFrom(src => src.Payment.Description))
                     .ForPath(destination => destination.DocumentTotals.VatSummary, opt => opt.MapFrom(src => new VatSummary
                     {

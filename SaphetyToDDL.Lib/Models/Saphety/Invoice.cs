@@ -11,16 +11,16 @@ namespace SaphetyToDDL.Lib.Models.Saphety
         public string DocInstanceId { get; set; } = Guid.NewGuid().ToString();
 
         [XmlAttribute("documentCorrelationId")]
-        public string DocumentCorrelationId { get; set; }
+        public string DocumentCorrelationId { get; set; } = Guid.NewGuid().ToString();
 
         [XmlAttribute("docTypeId")]
-        public string DocTypeId { get; set; }
+        public string DocTypeId { get; set; } = "1";
 
         [XmlElement("senderSoftwareCertificationNumber")]
-        public string SenderSoftwareCertificationNumber { get; set; }
+        public string SenderSoftwareCertificationNumber { get; set; } = "XXXX";
 
         [XmlElement("senderSoftwareDocumentSignatureHash")]
-        public string SenderSoftwareDocumentSignatureHash { get; set; }
+        public string SenderSoftwareDocumentSignatureHash { get; set; } = "XXXX";
 
         [XmlElement("currencyISOCode")]
         public string CurrencyISOCode { get; set; } = "EUR";
@@ -51,5 +51,8 @@ namespace SaphetyToDDL.Lib.Models.Saphety
 
         [XmlElement("metaInfo")]
         public MetaInfo MetaInfo { get; set; }
+
+        [XmlElement("paymentMethod")]
+        public PaymentMethod PaymentMethod { get; set; } = new PaymentMethod();
     }
 }
