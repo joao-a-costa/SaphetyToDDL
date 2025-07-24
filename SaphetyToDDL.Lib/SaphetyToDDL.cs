@@ -289,7 +289,7 @@ namespace SaphetyToDDL.Lib
                     //DetailNotes = line?.Note?.Select(n => n.Value).ToList()
                 };
 
-                if (!detail.UnitPrice.HasValue || (detail.UnitPrice.HasValue && detail.UnitPrice == 0))
+                if (!detail.UnitPrice.HasValue || detail.UnitPrice == 0)
                     detail.UnitPrice = detail.TotalNetAmount / detail.Quantity;
 
                 //if (line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value != null)
