@@ -290,7 +290,17 @@ namespace SaphetyToDDL.Lib
                 };
 
                 if (!detail.UnitPrice.HasValue || detail.UnitPrice == 0)
-                    detail.UnitPrice = detail.TotalNetAmount / detail.Quantity;
+                {
+                    if (detail.Quantity.HasValue && detail.Quantity != 0)
+                    {
+                        detail.UnitPrice = detail.TotalNetAmount / detail.Quantity;
+                    }
+                    else
+                    {
+                        // Handle the case where Quantity is 0 or null
+                        detail.UnitPrice = 0; // Default value or alternative logic
+                    }
+                }
 
                 //if (line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value != null)
                 //    detail.DiscountPercent = (double)line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value;
