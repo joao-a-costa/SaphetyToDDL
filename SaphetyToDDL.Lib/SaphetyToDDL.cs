@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -24,6 +25,7 @@ namespace SaphetyToDDL.Lib
         public enum DocumentType
         {
             Invoice = 1,
+            Order = 2,
             CreditNote = 4
         }
 
@@ -74,36 +76,27 @@ namespace SaphetyToDDL.Lib
             XDocument doc = XDocument.Parse(fileContent);
             XElement root = doc.Root;
 
-            // Initialize invoice object
-            Invoice invoice = null;
-
+            string rootName = root.Name.LocalName;
             XAttribute attr = root.Attribute("docTypeId");
-            string docTypeId = attr != null ? attr.Value : null;
+            string docTypeId = attr?.Value;
             if (!Enum.TryParse(docTypeId, out DocumentType documentType))
                 throw new InvalidOperationException(_infoUnrecognizedDocumentType);
 
-            var serializer = new XmlSerializer(typeof(Invoice));
+            var rootAttr = new XmlRootAttribute(rootName);
+            var serializer = new XmlSerializer(typeof(Invoice), rootAttr);
+            Invoice document;
             using (var reader = new StringReader(fileContent))
             {
-                invoice = (Invoice)serializer.Deserialize(reader);
+                document = (Invoice)serializer.Deserialize(reader);
             }
+
             ItemTransactionSaphetyDocumentType = documentType;
 
-            // Configure AutoMapper mappings
-            switch (ItemTransactionSaphetyDocumentType)
-            {
-                case DocumentType.Invoice:
-                case DocumentType.CreditNote:
-                    config = MapConfig();
-                    break;
-                default:
-                    break;
-            }
+            config = MapConfig();
 
-            // Map the InvoiceType object to an ItemTransaction object
-            var itemTransaction = config.CreateMapper().Map<ItemTransaction>(invoice);
+            var itemTransaction = config.CreateMapper().Map<ItemTransaction>(document);
 
-            ItemTransactionSaphety = invoice;
+            ItemTransactionSaphety = document;
             ItemTransaction = itemTransaction;
 
             return itemTransaction;
@@ -296,7 +289,18 @@ namespace SaphetyToDDL.Lib
                     //DetailNotes = line?.Note?.Select(n => n.Value).ToList()
                 };
 
-                
+                if (!detail.UnitPrice.HasValue || detail.UnitPrice == 0)
+                {
+                    if (detail.Quantity.HasValue && detail.Quantity != 0)
+                    {
+                        detail.UnitPrice = detail.TotalNetAmount / detail.Quantity;
+                    }
+                    else
+                    {
+                        // Handle the case where Quantity is 0 or null
+                        detail.UnitPrice = 0; // Default value or alternative logic
+                    }
+                }
 
                 //if (line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value != null)
                 //    detail.DiscountPercent = (double)line?.AllowanceCharge?.FirstOrDefault()?.MultiplierFactorNumeric.Value;
@@ -327,13 +331,18 @@ namespace SaphetyToDDL.Lib
                     NetPrice = (decimal)line.UnitPrice,
                     NetLineAmount = (decimal)line.TotalNetAmount,
                     TradeItemIdentification = line.ItemID,
-                    ItemDescription = line.Description,
-                    LineVat = new LineVat
-                    {
-                        TaxPercentage = (decimal)line.TaxList[0].TaxRate,
-                        //TaxCode = line?.Item?.ClassifiedTaxCategory?.FirstOrDefault()?.ID?.Value,
-                    }
+                    ItemDescription = line.Description
                 };
+
+                var taxRate = line.TaxList.FirstOrDefault()?.TaxRate;
+
+                if (line.TaxList.Any() && taxRate.HasValue)
+                    detail.LineVat = new LineVat
+                    {
+                        TaxPercentage = (decimal)taxRate.Value
+                    };
+
+
                 details.Add(detail);
             }
             return details;
