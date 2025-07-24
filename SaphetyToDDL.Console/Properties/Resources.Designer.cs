@@ -76,5 +76,20 @@ namespace SaphetyToDDL.Console.Properties {
                 return ResourceManager.GetString("saphetySampleFile1", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;order xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; creationDateTime=&quot;2025-07-22 00:00:00&quot; lastUpdateDate=&quot;2025-07-22 00:00:00&quot; docTypeId=&quot;2&quot; documentCorrelationId=&quot;12340722224102.34a0b2ef-6d79-4556-b283-5529e6040a12&quot;&gt;
+        ///  &lt;currencyISOCode&gt;EUR&lt;/currencyISOCode&gt;
+        ///  &lt;documentNumber&gt;ENC-123456789&lt;/documentNumber&gt;
+        ///  &lt;documentDates&gt;
+        ///    &lt;documentDate&gt;2025-07-11&lt;/documentDate&gt;
+        ///    &lt;deliveryDate&gt;2025-07-18&lt;/deliveryDate [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string saphetySampleFile2Order {
+            get {
+                return ResourceManager.GetString("saphetySampleFile2Order", resourceCulture);
+            }
+        }
     }
 }
