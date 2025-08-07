@@ -9,5 +9,8 @@ namespace SaphetyToDDL.Lib.Models.Saphety
 
         [XmlElement("taxTotalValue")]
         public decimal TaxTotalValue { get; set; }
+
+        [XmlElement("taxableAmount")]
+        public decimal TaxableAmount { get; set; }
     }
 }

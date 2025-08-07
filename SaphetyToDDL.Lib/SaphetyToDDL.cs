@@ -341,7 +341,9 @@ namespace SaphetyToDDL.Lib
                 if (line.TaxList.Any() && taxRate.HasValue)
                     detail.LineVat = new LineVat
                     {
-                        TaxPercentage = (decimal)taxRate.Value
+                        TaxPercentage = (decimal)taxRate.Value,
+                        TaxTotalValue = (decimal)(line.TotalTaxAmount.HasValue ? line.TotalTaxAmount.Value : 0),
+                        TaxableAmount = (decimal)line.TotalNetAmount,
                     };
 
 
