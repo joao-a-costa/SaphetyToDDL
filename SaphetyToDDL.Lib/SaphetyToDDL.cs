@@ -318,6 +318,7 @@ namespace SaphetyToDDL.Lib
         /// <returns>The mapped collection of InvoiceLineType objects.</returns>
         private static List<LineItem> MapInvoiceLinesReverse(IEnumerable<Detail> invoiceLines)
         {
+            int currentLineNumber = 1;
             var details = new List<LineItem>();
             foreach (var line in invoiceLines)
             {
@@ -328,6 +329,7 @@ namespace SaphetyToDDL.Lib
                     {
                         Value = (decimal)line.Quantity,
                     },
+                    Number = currentLineNumber++,
                     NetPrice = (decimal)line.UnitPrice,
                     NetLineAmount = (decimal)line.TotalNetAmount,
                     TradeItemIdentification = line.ItemID,
