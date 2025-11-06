@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace SaphetyToDDL.Lib.Models.Saphety
 {
@@ -17,6 +18,6 @@ namespace SaphetyToDDL.Lib.Models.Saphety
         public decimal TotalNetAmount { get; set; }
 
         [XmlElement("vatSummary")]
-        public VatSummary VatSummary { get; set; }
+        public List<VatSummary> VatSummary { get; set; }
     }
 }
