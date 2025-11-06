@@ -1,39 +1,106 @@
-﻿// Import necessary namespaces
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SaphetyToDDL.Lib.Models;
+using System;
 
-// Initialize the SaphetyToDDL engine
-var saphetyToDDL = new SaphetyToDDL.Lib.SaphetyToDDL();
+class Program
+{
+    static void Main(string[] args)
+    {
+        var saphetyToDDL = new SaphetyToDDL.Lib.SaphetyToDDL();
+        var serializeOptions = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
-// Setup JSON serialization settings (ignore nulls)
-var serializeOptions = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("=== SAPHETY / DDL Conversion Console ===");
+            Console.WriteLine("Select an option:");
+            Console.WriteLine("1) Parse SAPHETY XML and convert to DDL");
+            Console.WriteLine("2) Parse DDL JSON and convert to XML Invoice");
+            Console.WriteLine("3) Parse DDL JSON sample string and convert to XML Invoice");
+            Console.WriteLine("0) Exit");
+            Console.Write("> ");
 
-Console.WriteLine("=== Parsing SAPHETY Sample File ===");
+            var choice = Console.ReadLine();
 
-// Parse SAPHETY sample XML into internal model
-var itemTransactionSaphety = saphetyToDDL.Parse(SaphetyToDDL.Console.Properties.Resources.saphetySampleFile1);
+            switch (choice)
+            {
+                case "1":
+                    ProcessSaphety(saphetyToDDL, serializeOptions);
+                    break;
 
-// Serialize parsed object into JSON (pretty-printed)
-var serializeJsonSaphety = JsonConvert.SerializeObject(itemTransactionSaphety, Formatting.Indented, serializeOptions);
+                case "2":
+                    ProcessDdl(saphetyToDDL, serializeOptions);
+                    break;
 
-Console.WriteLine("--- SAPHETY Parsed JSON ---");
-Console.WriteLine(serializeJsonSaphety);
-Console.WriteLine();
+                case "3":
+                    ProcessDdlFromString(saphetyToDDL, serializeOptions);
+                    break;
 
-Console.WriteLine("=== Parsing DDL Sample File ===");
+                case "0":
+                    Console.WriteLine("Exiting...");
+                    return;
 
-// Deserialize DDL sample JSON into ItemTransaction
-var itemTransactionDdl = JsonConvert.DeserializeObject<ItemTransaction>(serializeJsonSaphety);
+                default:
+                    Console.WriteLine("Invalid option. Press Enter to try again...");
+                    Console.ReadLine();
+                    break;
+            }
+        }
+    }
 
-// Map DDL ItemTransaction into an Invoice object
-var invoiceSaphety = SaphetyToDDL.Lib.SaphetyToDDL.MapFromDdl(itemTransactionDdl);
+    static void ProcessSaphety(SaphetyToDDL.Lib.SaphetyToDDL saphetyToDDL, JsonSerializerSettings serializeOptions)
+    {
+        Console.WriteLine("\n=== Parsing SAPHETY Sample File ===");
 
-// Serialize Invoice object into XML format
-var serializeXmlDdl = SaphetyToDDL.Lib.SaphetyToDDL.SerializeInvoiceToXml(invoiceSaphety);
+        var itemTransactionSaphety = saphetyToDDL.Parse(SaphetyToDDL.Console.Properties.Resources.saphetySampleFile1);
+        var serializeJsonSaphety = JsonConvert.SerializeObject(itemTransactionSaphety, Formatting.Indented, serializeOptions);
 
-Console.WriteLine("--- DDL Mapped and Serialized to XML ---");
-Console.WriteLine(serializeXmlDdl);
-Console.WriteLine();
+        Console.WriteLine("--- SAPHETY Parsed JSON ---");
+        Console.WriteLine(serializeJsonSaphety);
 
-Console.WriteLine("=== Done. Press any key to exit ===");
-Console.ReadLine();
+        Console.WriteLine("\nPress Enter to continue...");
+        Console.ReadLine();
+    }
+
+    static void ProcessDdl(SaphetyToDDL.Lib.SaphetyToDDL saphetyToDDL, JsonSerializerSettings serializeOptions)
+    {
+        Console.WriteLine("\n=== Parsing SAPHETY Sample File First to get DDL JSON ===");
+        var itemTransactionSaphety = saphetyToDDL.Parse(SaphetyToDDL.Console.Properties.Resources.saphetySampleFile1);
+        var serializeJsonSaphety = JsonConvert.SerializeObject(itemTransactionSaphety, Formatting.Indented, serializeOptions);
+
+        var itemTransactionDdl = JsonConvert.DeserializeObject<ItemTransaction>(serializeJsonSaphety);
+
+        Console.WriteLine("--- Mapping to Invoice and Serializing to XML ---");
+        var invoiceSaphety = SaphetyToDDL.Lib.SaphetyToDDL.MapFromDdl(itemTransactionDdl);
+        var serializeXmlDdl = SaphetyToDDL.Lib.SaphetyToDDL.SerializeInvoiceToXml(invoiceSaphety);
+
+        Console.WriteLine("--- DDL Mapped XML Output ---");
+        Console.WriteLine(serializeXmlDdl);
+
+        Console.WriteLine("\nPress Enter to continue...");
+        Console.ReadLine();
+    }
+    static void ProcessDdlFromString(SaphetyToDDL.Lib.SaphetyToDDL saphetyToDDL, JsonSerializerSettings serializeOptions)
+    {
+        Console.WriteLine("\n=== Parsing DDL JSON Sample String ===");
+
+        // Read raw JSON text from resources
+        var ddlJsonString = SaphetyToDDL.Console.Properties.Resources.dllSampleString2;
+
+        Console.WriteLine("--- Loaded DDL JSON ---");
+        Console.WriteLine(ddlJsonString);
+
+        // Map JSON string to invoice
+        Console.WriteLine("\n--- Mapping JSON to Invoice and Serializing to XML ---");
+        var invoiceSaphety = SaphetyToDDL.Lib.SaphetyToDDL.MapFromDdlString(ddlJsonString);
+
+        // Serialize to XML
+        var serializeXmlDdl = SaphetyToDDL.Lib.SaphetyToDDL.SerializeInvoiceToXml(invoiceSaphety);
+
+        Console.WriteLine("--- DDL Mapped XML Output ---");
+        Console.WriteLine(serializeXmlDdl);
+
+        Console.WriteLine("\nPress Enter to continue...");
+        Console.ReadLine();
+    }
+}

@@ -658,5 +658,7 @@ namespace SaphetyToDDL.Lib.Models
 
         [JsonProperty("Base64")]
         public string Base64;
+        [JsonProperty("Taxes")]
+        public List<TaxValue> Taxes;
     }
 }

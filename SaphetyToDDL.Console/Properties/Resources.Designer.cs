@@ -61,6 +61,52 @@ namespace SaphetyToDDL.Console.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///   &quot;TransDocType&quot;:1,
+        ///   &quot;TransBehavior&quot;:1,
+        ///   &quot;TransactionGuid&quot;:&quot;9C2DE3B6101F8347B8FB12B5B4234AE5&quot;,
+        ///   &quot;TempTransIndex&quot;:0.0,
+        ///   &quot;CreateDate&quot;:&quot;2025-10-13T00:00:00&quot;,
+        ///   &quot;CreateTime&quot;:&quot;1899-12-30T12:49:40&quot;,
+        ///   &quot;DeferredPaymentDate&quot;:&quot;2025-10-14T00:00:00&quot;,
+        ///   &quot;ActualDeliveryDate&quot;:&quot;2025-10-13T00:00:00&quot;,
+        ///   &quot;ContractReferenceNumber&quot;:&quot;8084103759&quot;,
+        ///   &quot;DefaultWarehouse&quot;:2005,
+        ///   &quot;PartyAddressID&quot;:0,
+        ///   &quot;PartyAddressLine1&quot;:&quot;Morada nº 1 do Cliente nº 102021&quot;,
+        ///   &quot;PartyAddressLine2&quot;:&quot;&quot;,
+        ///   &quot;PartyPostalCod [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ddlSampleString {
+            get {
+                return ResourceManager.GetString("ddlSampleString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///   &quot;TransDocType&quot;:1,
+        ///   &quot;TransBehavior&quot;:1,
+        ///   &quot;TransactionGuid&quot;:&quot;B7B9913F92CA1543A72270FF00F261F6&quot;,
+        ///   &quot;TempTransIndex&quot;:0.0,
+        ///   &quot;CreateDate&quot;:&quot;2025-10-13T00:00:00&quot;,
+        ///   &quot;CreateTime&quot;:&quot;1899-12-30T15:17:54&quot;,
+        ///   &quot;DeferredPaymentDate&quot;:&quot;2025-10-14T00:00:00&quot;,
+        ///   &quot;ActualDeliveryDate&quot;:&quot;2025-10-13T00:00:00&quot;,
+        ///   &quot;ContractReferenceNumber&quot;:&quot;8084018270&quot;,
+        ///   &quot;DefaultWarehouse&quot;:2005,
+        ///   &quot;PartyAddressID&quot;:0,
+        ///   &quot;PartyAddressLine1&quot;:&quot;Morada nº 1 do Cliente nº 102021&quot;,
+        ///   &quot;PartyAddressLine2&quot;:&quot;&quot;,
+        ///   &quot;PartyPostalCod [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string dllSampleString2 {
+            get {
+                return ResourceManager.GetString("dllSampleString2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;invoice docInstanceId=&quot;5a7edb94-530d-3a5f-b979-d8849c3ec521&quot; documentCorrelationId=&quot;521af6a2-0032-48a0-b92c-7c9d140aea65&quot; docTypeId=&quot;1&quot;&gt;
         /// &lt;senderSoftwareCertificationNumber&gt;xxxx&lt;/senderSoftwareCertificationNumber&gt;

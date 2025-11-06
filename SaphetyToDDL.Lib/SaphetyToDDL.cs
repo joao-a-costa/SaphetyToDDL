@@ -158,10 +158,12 @@ namespace SaphetyToDDL.Lib
                     //.ForPath(destination => destination.Payment.PaymentDays, opt => opt.MapFrom(src => $"{Regex.Replace(src.PaymentTerms.Value, "[a-zA-Z]", "")}"))
                     .ForPath(destination => destination.Payment.Description, opt => opt.MapFrom(src => src.PaymentTerms.Description))
                     .ForPath(destination => destination.Party, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
-                    .ForPath(destination => destination.CustomerParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
+                    //.ForPath(destination => destination.CustomerParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Buyer)))
                     .ForPath(destination => destination.SupplierParty, opt => opt.MapFrom(src => MapParty(src.PartyInformation.Seller)))
                     .ForPath(destination => destination.UnloadPlaceAddress, opt => opt.MapFrom(src => MapUnloadPlaceAddress(src.PartyInformation.ShipTo)))
                     .ForPath(destination => destination.Details, opt => opt.MapFrom(src => MapInvoiceLines(src.LineItems)))
+                    .ForPath(destination => destination.Taxes, opt => opt.MapFrom(src => MapTaxValues(src.DocumentTotals.VatSummary)))
+                    //.ForPath(destination => destination.Taxes, opt => opt.MapFrom(src => MapTaxValues(src.tax.ShipTo)))
                     .ForAllOtherMembers(opt => opt.Ignore());
 
                 // Mapping: ItemTransaction ➔ Invoice (Reverse mapping)
@@ -178,12 +180,7 @@ namespace SaphetyToDDL.Lib
                     .ForPath(destination => destination.DocumentNumber, opt => opt.MapFrom(src => src.ISignableTransactionTransactionID))
                     //.ForPath(destination => destination.PaymentTerms.Value, opt => opt.MapFrom(src => $"{src.Payment.PaymentDays}"))
                     .ForPath(destination => destination.PaymentTerms.Description, opt => opt.MapFrom(src => src.Payment.Description))
-                    .ForPath(destination => destination.DocumentTotals.VatSummary, opt => opt.MapFrom(src => new VatSummary
-                    {
-                        TaxPercentage = 23m,  // Default fixed value
-                        TaxTotalValue = (decimal)src.TotalTaxAmount,
-                        TaxableAmount = (decimal)src.TotalAmount
-                    }))
+                    .ForPath(destination => destination.DocumentTotals.VatSummary, opt => opt.MapFrom(src => MapTaxValuesReverse(src.Taxes)))
                     .ForPath(destination => destination.PartyInformation.Buyer, opt => opt.MapFrom(src => MapPartyReverse(src.Party)))
                     .ForPath(destination => destination.PartyInformation.Seller, opt => opt.MapFrom(src => MapPartyReverse(src.SupplierParty == null ? src.Party : src.SupplierParty)))
                     .ForPath(destination => destination.PartyInformation.ShipTo, opt => opt.MapFrom(src => MapUnloadPlaceAddressReverse(src.UnloadPlaceAddress)))
@@ -350,6 +347,41 @@ namespace SaphetyToDDL.Lib
                 details.Add(detail);
             }
             return details;
+        }
+
+        private static List<TaxValue> MapTaxValues(IEnumerable<Models.Saphety.VatSummary> vatSummaries)
+        {
+            var taxList = new List<TaxValue>();
+
+            foreach (var vat in vatSummaries)
+            {
+                var tax = new TaxValue
+                {
+                    TaxRate = (double)vat.TaxPercentage,
+                    TotalTaxAmount = (double)vat.TaxTotalValue,
+                    TotalNetChargeableAmount = (double)vat.TaxableAmount
+                };
+
+                taxList.Add(tax);
+            }
+
+            return taxList;
+        }
+
+        private static List<Models.Saphety.VatSummary> MapTaxValuesReverse(IEnumerable<TaxValue> taxLists)
+        {
+            var taxValues = new List<Models.Saphety.VatSummary>();
+            foreach (var tax in taxLists)
+            {
+                var taxValue = new Models.Saphety.VatSummary
+                {
+                    TaxPercentage = (decimal)tax.TaxRate,
+                    TaxTotalValue = (decimal)(tax.TotalTaxAmount),
+                    TaxableAmount = (decimal)(tax.TotalNetChargeableAmount),
+                };
+                taxValues.Add(taxValue);
+            }
+            return taxValues;
         }
 
         #endregion
