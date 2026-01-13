@@ -1,14 +1,15 @@
-﻿using System;
+﻿using AutoMapper;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SaphetyToDDL.Lib.Models;
+using SaphetyToDDL.Lib.Models.Saphety;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using AutoMapper;
-using Newtonsoft.Json;
-using SaphetyToDDL.Lib.Models;
-using SaphetyToDDL.Lib.Models.Saphety;
 
 namespace SaphetyToDDL.Lib
 {
@@ -137,6 +138,76 @@ namespace SaphetyToDDL.Lib
 
         #region "Private"
 
+        private static string ExtractZipCode(string postalCode)
+        {
+            if (string.IsNullOrWhiteSpace(postalCode))
+                return null;
+
+            // Matches 1234-567
+            var match = System.Text.RegularExpressions.Regex.Match(
+                postalCode,
+                @"\b\d{4}-\d{3}\b"
+            );
+
+            return match.Success ? match.Value : postalCode.Trim();
+        }
+
+        private static string ExtractCityFromPostalCode(string postalCode)
+        {
+            if (string.IsNullOrWhiteSpace(postalCode))
+                return null;
+
+            var parts = postalCode
+                .Trim()
+                .Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Length == 2 && !string.IsNullOrWhiteSpace(parts[1]))
+                return parts[1].Trim();
+
+            return null;
+        }
+
+        private static string ExtractZipArea(Models.Party party)
+        {
+            if (party == null)
+                return null;
+
+            // 1️ - Try from PostalCode (e.g. "4904-859 City")
+            var zipAreaFromPostalCode = ExtractCityFromPostalCode(party.PostalCode);
+            if (!string.IsNullOrWhiteSpace(zipAreaFromPostalCode))
+                return zipAreaFromPostalCode;
+
+            // 2️ - Get address list (List<object>)
+            var rawAddresses = party.PartyInfo?.AddressList;
+            if (rawAddresses == null || rawAddresses.Count == 0)
+                return null;
+
+            // 3️ - Convert to JObject once
+            var addresses = rawAddresses
+                .Select(a => a as JObject ?? JObject.FromObject(a))
+                .ToList();
+
+            // 4️ - Prefer AddressType == 0, otherwise first
+            var address = addresses
+                .FirstOrDefault(a => a.Value<int?>("AddressType") == 0)
+                ?? addresses.First();
+
+            // 5️ - Priority inside address
+            var delivery = address.Value<string>("Delivery");
+            if (!string.IsNullOrWhiteSpace(delivery))
+                return delivery;
+
+            var locality = address.Value<string>("LocalityName");
+            if (!string.IsNullOrWhiteSpace(locality))
+                return locality;
+
+            var province = address.Value<string>("ProvinceName");
+            if (!string.IsNullOrWhiteSpace(province))
+                return province;
+
+            return null;
+        }
+
         /// <summary>
         /// Maps an InvoiceType object to an ItemTransaction object.
         /// </summary>
@@ -173,10 +244,10 @@ namespace SaphetyToDDL.Lib
                     .ForPath(destination => destination.DocumentDates.DocumentDate, opt => opt.MapFrom(src => src.CreateDate))
                     .ForPath(destination => destination.DocumentDates.DueDate, opt => opt.MapFrom(src => src.DeferredPaymentDate))
                     .ForPath(destination => destination.DocumentReferences.OrderReference, opt => opt.MapFrom(src => src.ContractReferenceNumber))
-                    .ForPath(destination => destination.DocumentTotals.TotalNetAmount, opt => opt.MapFrom(src => src.TotalAmount))
+                    .ForPath(destination => destination.DocumentTotals.TotalNetAmount, opt => opt.MapFrom(src => src.TotalNetAmount))
                     .ForPath(destination => destination.DocumentTotals.TotalAmountPayable, opt => opt.MapFrom(src => src.TotalTransactionAmount))
                     .ForPath(destination => destination.DocumentTotals.TotalVatAmount, opt => opt.MapFrom(src => src.TotalTaxAmount))
-                    .ForPath(destination => destination.DocumentTotals.TotalVatTaxableAmount, opt => opt.MapFrom(src => src.TotalAmount))
+                    .ForPath(destination => destination.DocumentTotals.TotalVatTaxableAmount, opt => opt.MapFrom(src => src.TotalNetAmount))
                     .ForPath(destination => destination.DocumentNumber, opt => opt.MapFrom(src => src.ISignableTransactionTransactionID))
                     //.ForPath(destination => destination.PaymentTerms.Value, opt => opt.MapFrom(src => $"{src.Payment.PaymentDays}"))
                     .ForPath(destination => destination.PaymentTerms.Description, opt => opt.MapFrom(src => src.Payment.Description))
@@ -188,7 +259,6 @@ namespace SaphetyToDDL.Lib
                     .ForAllOtherMembers(opt => opt.Ignore());
             });
         }
-
 
         /// <summary>
         /// Maps a PartyType object to a Party object.
@@ -219,7 +289,8 @@ namespace SaphetyToDDL.Lib
                 VatNumber = party.FederalTaxID,
                 Name = party.OrganizationName,
                 Address = party.AddressLine1,
-                ZipCode = party.PostalCode,
+                ZipCode = ExtractZipCode(party.PostalCode),
+                ZipArea = ExtractZipArea(party),
                 Country = party.CountryID
             };
         }
